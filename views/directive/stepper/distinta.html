@@ -1,5 +1,5 @@
-<div  style="min-height: 480px;">
-
+    <div  style="min-height: 480px;">
+        <form name="distinta">
     <div class="l-flex-between ">
         <div aria-label="breadcrumb" class="nsa-breadcrumb-container" >
             <ol class="breadcrumb">
@@ -23,8 +23,8 @@
             <div class="nsa-input is-disabled" >
                 <label class="nsa-input__label nsa-input__label__btn-plus" for="input--6">CODICE OGGETTO</label>
                 <div class="nsa-input__button-add-container">
-                    <input type="input" class="nsa-input__input" id="input--6" placeholder="Inserisci codice" value="" disabled="">
-                    <button type="button" class="" disabled="">
+                    <input type="input" name="codice" class="nsa-input__input" id="input--6" placeholder="Inserisci codice" value="" disabled="">
+                    <button type="button" class="" disabled="" >
                         <span>+</span>
                     </button>
                 </div>
@@ -46,18 +46,37 @@
     <div class="row l-flex-end  u-mt-35">
         <div class="col-sm-4">
             <div class="nsa-input has-border">
-                <label class="nsa-input__label" for="input-1">Primo codice</label>
-                <input type="input"  ng-model="formData.data.primocodice" class="nsa-input__input nsa-input__input--has-cross nsa-input__input--is-valid-code" id="input-1"  placeholder="">
-                <a href="" class="nsa-input__cross nsa-input__cross--is-valid-code">
+                <label class="nsa-input__label" for="primocodice">Primo codice</label>
+                <input type="input"
+                       name="primocodice"
+                       ng-model="formData.data.primocodice"
+                       class="nsa-input__input nsa-input__input--has-cross "
+                       ng-class="formData.data.primocodice ? 'nsa-input__input--is-valid-code' : 'nsa-input__input--is-invalid-code'"
+                       id="primocodice"
+                       required
+                       >
+                <a href=""
+                   ng-class="formData.data.primocodice ? 'nsa-input__cross--is-valid-code' : 'nsa-input__cross--is-invalid-code'"
+                   class="nsa-input__cross "
+                   ng-click="formData.data.primocodice = ''">
                     <span class="icomoon icomoon-cross"></span>
                 </a>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="nsa-input has-border">
-                <label class="nsa-input__label" for="input-1">Ultimo codice</label>
-                <input type="input" ng-model="formData.data.ultimocodice" class="nsa-input__input nsa-input__input--has-cross nsa-input__input--is-valid-code" id="input-1" value="OGG87654321087654321" placeholder="">
-                <a href="" class="nsa-input__cross nsa-input__cross--is-valid-code">
+                <label class="nsa-input__label" for="ultimocodice">Ultimo codice</label>
+                <input type="input"
+                       name="ultimocodice"
+                       ng-model="formData.data.ultimocodice"
+                       class="nsa-input__input nsa-input__input--has-cross "
+                       id="ultimocodice"
+                       ng-class="formData.data.ultimocodice ? 'nsa-input__input--is-valid-code' : 'nsa-input__input--is-invalid-code'"
+                       placeholder=""
+                       required>
+                <a href="" class="nsa-input__cross"
+                   ng-class="formData.data.ultimocodice ? 'nsa-input__cross--is-valid-code' : 'nsa-input__cross--is-invalid-code'"
+                   ng-click="formData.data.ultimocodice = ''">
                     <span class="icomoon icomoon-cross"></span>
                 </a>
             </div>
@@ -95,14 +114,14 @@
     <div class="row l-flex-end u-mt-30 ">
         <div class="col-sm-4">
             <div class="nsa-input has-border" >
-                <label class="nsa-input__label" for="input-1">Range</label>
-                <input type="input" ng-model="dataStep.step[indexstep].data.rangestart" class="nsa-input__input" id="input-1"  placeholder="" readonly="">
+                <label class="nsa-input__label" for="rangeup">Range</label>
+                <input type="input" name="rangeup" ng-model="dataStep.step[indexstep].data.rangestart" class="nsa-input__input" id="rangeup"  placeholder="" readonly="">
             </div>
         </div>
         <div class="col-sm-4">
             <div class="nsa-input has-border" >
-                <label class="nsa-input__label" for="input-1"></label>
-                <input type="input" ng-model="dataStep.step[indexstep].data.rangefinish" class="nsa-input__input" id="input-1" placeholder="" readonly="">
+                <label class="nsa-input__label" for="rangedown"></label>
+                <input type="input" name="rangedown" ng-model="dataStep.step[indexstep].data.rangefinish" class="nsa-input__input" id="rangedown" placeholder="" readonly="">
             </div>
         </div>
     </div>
@@ -110,8 +129,8 @@
     <div class="row l-flex-end  u-mt-35">
         <div class="col-sm-4">
             <div class="nsa-input has-border">
-                <label class="nsa-input__label" for="input-1">Singoli salti</label>
-                <input type="input" class="nsa-input__input" ng-model="dataStep.step[indexstep].data.singledata" id="input-1" placeholder="">
+                <label class="nsa-input__label" for="salti">Singoli salti</label>
+                <input type="input" name="salti" class="nsa-input__input" ng-model="dataStep.step[indexstep].data.singledata" id="salti" placeholder="">
             </div>
         </div>
     </div>
@@ -136,9 +155,11 @@
                 <span class="nsa-link-14-500 nsa-link--has-underline">Salva e chiudi</span>
                 <span class="icomoon icomoon-"></span>
             </a>
-            <button type="button" class="btn btn-navigation " >
+            <button type="button" class="btn btn-navigation " ng-disabled="distinta.$invalid">
                 crea distinta
             </button>
+
         </div>
     </div>
+        </form>
 </div>
