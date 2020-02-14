@@ -1,0 +1,208 @@
+<form name="tableForm">
+    <div class="u-pos-relative u-mt-25 w-100" ng-show="tipologia=='tabellaclassica'" >
+    <div class="row">
+        <div class="col-sm-2" ng-if="dati.length > 1 && search">
+            <div class="u-mr-15">
+                <div class="nsa-input " >
+                    <label class="nsa-input__label" for="input1">Cerca</label>
+                    <input type="input" class="nsa-input__input" ng-model="form.search" id="input1" placeholder="Cerca" >
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="card-order-information-container " ng-class="disclaimer ? '' : 'is-hidden'" >
+            <div class="card-order-information-container__header">
+                <div class="card-order-information-container__header__title">
+                              <span class="card-order-information-container__header__title__order-information-number">
+                               {{detail.id}}
+                              </span>
+                    <span class="card-order-information-container__header__title__client">
+                               {{detail.client}}
+                              </span>
+                </div>
+                <button class="card-order-information-container__header__close-button" id="js-close-order-information">
+                    <span class="icomoon icomoon-cross" ng-click="disclaimer=!disclaimer"> </span>
+                </button>
+            </div>
+            <div class="card-order-information-container__body">
+                <div class="card-order-information-container__body__information-box">
+                    <div class="card-order-information-container__body__information-box__line">
+                        <span class="card-order-information-container__body__information-box__title">Provider contract</span>
+                        <span class="card-order-information-container__body__information-box__value">-</span>
+                    </div>
+
+                    <div class="card-order-information-container__body__information-box__line">
+                        <span class="card-order-information-container__body__information-box__title">Offerta commerciale</span>
+                        <span class="card-order-information-container__body__information-box__value">-</span>
+                    </div>
+
+                    <div class="card-order-information-container__body__information-box__line">
+                        <span class="card-order-information-container__body__information-box__title">Forma contrattuale</span>
+                        <span class="card-order-information-container__body__information-box__value">Conto proprio</span>
+                    </div>
+
+                    <div class="card-order-information-container__body__information-box__line">
+                        <span class="card-order-information-container__body__information-box__title">Modalità di pagamento</span>
+                        <span class="card-order-information-container__body__information-box__value">-</span>
+                    </div>
+
+                    <div class="card-order-information-container__body__information-box__line">
+                        <span class="card-order-information-container__body__information-box__title">Saldo</span>
+                        <span class="card-order-information-container__body__information-box__value">0 €</span>
+                    </div>
+                </div>
+
+                <div class="nsa-card-delivery nsa-card-delivery--has-shadow" >
+                    <div class="nsa-content nsa-content--bigger">
+                        <div class="nsa-content__container-title">
+                            <p class="nsa-content__container-title__title">{{}}</p>
+                            <span class="icomoon icomoon-acceptance-approved"></span>
+                        </div>
+                        <div class="nsa-content__info">
+                            <span class="icomoon icomoon-reservations"></span>
+                            <p class="nsa-content__info__text nsa-content__info__text--single">
+                                Prenotazione:
+                                <span class="nsa-content__info__text--info">n° {{detail.bookingcode}} - {{detail.bookingdate |  date : "dd/MM/yy HH:mm"}}</span>
+                            </p>
+                        </div>
+                        <div class="nsa-content__total-pieces">
+                            <span class="icomoon icomoon-chunks"></span>
+                            <p class="nsa-content__total-pieces__text">
+                                Pezzi tot.: <span class="nsa-content__total-pieces__text--info">-</span>
+                            </p>
+                        </div>
+                        <div class="nsa-content__supply">
+                            <p class="nsa-content__supply__text">
+                                Fornitura <span class="nsa-content__supply__text--info">n° - - </span>
+                            </p>
+                        </div>
+                        <div class="nsa-content__footer">
+                            <span class="nsa-content__footer__work-by"> Lavorato da: -</span>
+                            <button type="button" class="btn btn-navigation more-pd-right onlyIcon" >
+                                <span class="icomoon icomoon-arrow-right"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <table class="nsa-table nsa-table-orders"  ng-class="disclaimer ? 'has-layer' : ''" style="position: relative;" >
+        <thead class="nsa-table__intestation">
+        <tr>
+            <th class="nsa-table__intestation__item"
+                ng-repeat="item in customHeader"
+                ng-class="{'tw-30': item.type=='detail', 'tw-60' : item.type!='id', 'tw-60' : item.type!='ordid','nsa-table__intestation__item--has-sorter': item.type!='id' && item.type!='edit' && item.type!='detail' && item.type!='ordid' && item.type!='eye'}"
+                ng-click="sort(item.key)"
+            >
+                {{item.value}}
+            </th>
+        </tr>
+        </thead>
+        <tbody class="nsa-table__content" ng-show="dati.length > 0">
+        <tr dir-paginate="(datoindex, dato) in dati | filter: searchElement | orderBy:sortKey:reverse | itemsPerPage:8 "
+            current-page="currentPage" pagination-id="tableName">
+            <td class="nsa-table__content__item"
+                ng-repeat="item in customHeader"
+                ng-class="{'nsa-table__content__item--is-last': item.type=='detail'}"
+            >
+                <div class="wrap" ng-if="item.type=='id'"><span class="icomoon icomoon-user icomoon--lg"></span></div>
+                <div class="wrap" ng-if="item.type=='ordid'"><span class="icomoon icomoon-acceptance-approved icomoon--lg"></span></div>
+                <div class="wrap" ng-if="item.type=='text'">{{dato[item.key]}}</div>
+                <div class="wrap" ng-if="item.type=='date'">{{dato[item.key] | date : "dd/MM/yy"}}</div>
+                <div class="wrap" ng-if="item.type=='paring' && dato[item.key] > 0"
+                     ng-repeat="val in item.paringValue | filter:{entityId:dato[item.key]}"
+                     ng-show="$index<1">{{val.entityValue}}</div>
+
+                <div class="wrap" ng-if="item.type=='paring' && dato[item.key] == 0"
+                    >-</div>
+                <div class="wrap" ng-if="item.type=='valid'">
+                    <span ng-if="dato[item.key]" class="glyphicon glyphicon-ok-sign" style="color:green" aria-hidden="true"></span>
+                    <span ng-if="!dato[item.key]" class="glyphicon glyphicon-remove-sign" style="color:red"aria-hidden="true"></span>
+                </div>
+                <!--<div class="wrap hasWiew" ng-if="item.type=='edit'">-->
+                    <!--<button type="button" class="btn btn-outline-primary is-circle" ng-click="functionEdit(dato)">-->
+                        <!--<span class="icomoon icomoon-view"></span>-->
+                    <!--</button>-->
+                <!--</div>-->
+                <div class="wrap hasWiew" ng-if="item.type=='edit'">
+                    <div class="nsa-overflow-menu">
+                        <div class="nsa-overflow-menu__header btn-group dropleft show">
+                            <button type="button" class="nsa-overflow-menu__header__button" ng-click="modenabled(datoindex, dati);" data-toggle="dropdown" aria-expanded="true" data-offset="20, 2">
+                                <span class="icomoon icomoon-dots"></span>
+                            </button>
+                            <div class="nsa-overflow-menu__content dropdown-menu" ng-class="openMenu[datoindex] ? 'show' : ''" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-77px, 20px, 0px); ">
+                                <button class="nsa-overflow-menu__content__item dropdown-item" ng-click="functionEdit(dato); openMenu[datoindex]=!openMenu[datoindex]" type="button" style="width: 100%;padding-bottom: 7px;">
+                                    Modifica
+                                </button>
+                                <!--<button class="nsa-overflow-menu__content__item dropdown-item" type="button">-->
+                                    <!--Elimina-->
+                                <!--</button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrap hasWiew" ng-if="item.type=='eye'">
+                    <div class="nsa-overflow-menu">
+                        <div class="nsa-overflow-menu__header btn-group dropleft show">
+                            <button type="button" class="btn btn-outline-primary is-circle" ng-click="disclaimerFun(dato)">
+                                <span class="icomoon icomoon-view" ></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrap " ng-if="item.type=='detail'">
+                    <button type="button" class="btn btn-navigation is-flap" ng-click="functionDetail(dato)">
+                        <span class="icomoon icomoon-arrow-right"></span>
+                    </button>
+                </div>
+                <div class="wrap " ng-if="item.type=='percentage'">
+                    <div class="nsa-progress-bar">
+                        <label class="nsa-progress-bar__label">In pesatura</label>
+                        <div class="nsa-progress-bar__content">
+                            <div class="nsa-progress-bar__value u-bg-info" role="progressbar" aria-valuenow="{{dato[item.key]}}" aria-valuemin="0" aria-valuemax="100" style="width: {{dato[item.key]}}%"></div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+        <tbody class="nsa-table__content   nsa-table__content--no-service " ng-show="!dati.length && !showSpinner">
+        <tr>
+            <td colspan="11" class="nsa-table__content__item   nsa-table__content__item--has-colspan  ">
+                <div class="wrap ">
+                    Nessun elemento
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="l-row-center" ng-show="showSpinner">
+        <div class="d-flex u-mr-15">
+            <div class="loader-container" >
+                <div class="loader-container__gif"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--<dir-pagination-controls-->
+            <!--ng-if="!disclaimer"-->
+            <!--ng-hide="searchElement"-->
+            <!--class="l-row-center u-mt-20"-->
+            <!--[max-size="8"]-->
+            <!--[direction-links="true"]-->
+            <!--[boundary-links="true"]-->
+    <!--&gt;-->
+    <!--</dir-pagination-controls>-->
+
+        <dir-pagination-controls
+                ng-if="!disclaimer"
+                class="l-row-center u-mt-10"
+                boundary-links="true"
+                on-page-change="pageChangeHandler(newPageNumber)"
+                pagination-id="tableName">
+        </dir-pagination-controls>
+
+
+</div>
+</form>

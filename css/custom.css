@@ -1,0 +1,75 @@
+.nsa-table {height:auto;}
+.pad-input {padding:20px;}
+.nsa-card__header__block .item__text{
+    line-height: 2;
+}
+.modal .modal-loader .model-content{
+    box-shadow: none;
+    background: none;
+    border: none;
+}
+.nsa-card__header__block--last {
+    padding-bottom: 17px;
+}
+.spinner-card {
+    margin-top:10px;
+}
+.nsa-textarea__textarea {
+    min-height: 100px;
+}
+
+.table-modal {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.nsa-card__header__block .nsa-input {
+    height:36px;
+}
+.mr-auto, .mx-auto {
+    margin-right: auto;
+    margin-right: auto;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+button, input {
+    overflow: visible;
+    text-transform: none;
+    outline:none;
+}
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    cursor: pointer;
+}
+[type=button], [type=reset], [type=submit], button {
+    -webkit-appearance: button;
+}
+*:focus {
+    outline: 0 !important;
+}
+
+.nsa-header--has-box-search {
+    height: 108px;
+}
+.pagination {
+    margin: 20px 0 0 0;
+}
+.pagination > li > a, .pagination > li > span {
+    padding: 2px 10px;
+}
+.l-main {
+    overflow-x:hidden;
+    background: #f6f6f6;
+}
+.colum-container .nsa-column__footer {
+    bottom: 10px;
+}
+.stepper-container {
+    height:80vh;
+}
+.nsa-datepicker__input {
+    cursor:pointer;
+}
+.collapse {
+    transition: width 0.5s ease-in;
+}

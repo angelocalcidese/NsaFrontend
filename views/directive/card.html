@@ -1,0 +1,141 @@
+<article class="nsa-card nsa-card--has-borders">
+    <div class="l-row-center spinner-card" ng-show="showSpinner">
+        <div class="d-flex u-mr-15">
+            <div class="loader-container">
+                <div class="loader-container__gif"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <section class="nsa-card__header">
+        <div class="nsa-card__header__block">
+            <div class="nsa-row" ng-if="dettaglioVoice && cards">
+
+                <div class="item" ng-repeat="voice in dettaglioVoice">
+                    <span class="item__title">{{voice.itemTitle}}</span>
+                    <span class="item__text" title="{{dettaglio[voice.data]}}">{{dettaglio[voice.data]}}</span>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="nsa-card__header__block--last" ng-if="cardVoice.rightTextActionActive && cards">
+            <div class="nsa-cta-flap" ng-if="dettaglio['applicationActive']">
+                <div class="icomoon icomoon-mark"></div>
+                <div class="nsa-cta-flap__content">
+                    <span class="nsa-cta-flap__information">{{cardVoice.rightTextActionActive}}</span>
+                    <a class="nsa-cta-flap__link" href="" ng-click="actionFunDett(dettaglio, 'card')">{{cardVoice.rightTextLinkActive}}</a>
+                </div>
+            </div>
+            <div class="nsa-cta-flap" ng-if="!dettaglio['applicationActive']">
+                <div class="icomoon icomoon-mark icomoon-cross"></div>
+                <div class="nsa-cta-flap__content">
+                    <span class="nsa-cta-flap__information">{{cardVoice.rightTextActionDisabled}}</span>
+                    <a class="nsa-cta-flap__link" href="" ng-click="actionFunDett(dettaglio, 'card')">{{cardVoice.rightTextLinkDisabled}}</a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section class="nsa-card__body">
+
+        <div class="l-flex-between">
+            <p class="nsa-t-13-400 u-dark-gray u-text-transform">
+                {{cardVoice.membership}} (<strong>{{cards.length}}</strong>)
+            </p>
+            <div class="nsa-dropdown nsa-dropdown-pagination" >
+                <label class="nsa-dropdown__label">Elementi per pagina</label>
+
+                <div class="ss-main nsa-dropdown__select" style="">
+                    <div class="ss-single-selected" ng-click="operNum = !operNum">
+                        <span class="placeholder" ng-if="elementViews != 1000">{{elementViews}}</span>
+                        <span class="placeholder" ng-if="elementViews == 1000">Tutti</span>
+                        <span class="ss-deselect ss-hide">x</span
+                    ><span class="ss-arrow"><span  ng-class="operNum ? 'arrow-up' : 'arrow-down'"></span></span>
+                    </div>
+                    <div class="ss-content" ng-class="operNum ? 'ss-open' : ''">
+
+                        <div class="ss-list ss-open">
+                            <div class="ss-option  " ng-click="elementViews = 8; operNum = !operNum" ng-class="elementViews == '8' ? 'ss-option-selected' : ''">8</div>
+                            <div class="ss-option" ng-click="elementViews = 16; operNum = !operNum" ng-class="elementViews == '16' ? 'ss-option-selected' : ''">16</div>
+                            <div class="ss-option" ng-click="elementViews = 24; operNum = !operNum" ng-class="elementViews == '24' ? 'ss-option-selected' : ''">24</div>
+                            <div class="ss-option" ng-click="elementViews = 32; operNum = !operNum" ng-class="elementViews == '32' ? 'ss-option-selected' : ''">32</div>
+                            <div class="ss-option" ng-click="elementViews = 1000; operNum = !operNum" ng-class="elementViews == '1000' ? 'ss-option-selected' : ''">Tutti</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nsa-card__body__container-cards" >
+            <!--<div class="nsa-card-delivery" ng-repeat="card in cards">-->
+            <div class="nsa-card-delivery" dir-paginate="card in cards | filter: searchElement | itemsPerPage:elementViews "
+                 current-page="currentPage" pagination-id="cardName">
+                <div class="nsa-content ">
+                    <div class="nsa-content__container-title ">
+                        <p class="nsa-content__container-title__title  ">{{card[cardVoice.titleCard1]}} {{card[cardVoice.titleCard2]}}</p>
+                        <span class="icomoon icomoon-acceptance-approved"></span>
+                    </div>
+                    <div class="nsa-content__info">
+                        <!--<span class="icomoon icomoon-reservations"></span>-->
+                        <span class="icomoon icomoon-alert" ng-show="card.inherited"></span>
+                        <p class="nsa-content__info__text" ng-hide="card.inherited">{{card.description}} </p>
+                        <p class="nsa-content__info__text" ng-show="card.inherited"><b>Da:</b> {{card.inheritedName}} </p>
+                    </div>
+
+                    <button type="button" class="btn btn-navigation more-pd"
+                            ng-if="cardVoice.deleteEnable"
+                            ng-disabled="(!dettaglio['applicationActive'] && !cardVoice.deActive) || card.inherited"
+                            ng-click="confirmAction(card)">
+                        {{cardVoice.bottomAction}}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <dir-pagination-controls
+                class="l-row-center u-mt-20"
+                boundary-links="true"
+                on-page-change="pageChangeHandler(newPageNumber)"
+                pagination-id="cardName">
+        <!--<nav-->
+                <!--class="l-row-center u-mt-20"-->
+                <!--aria-label="Page navigation"-->
+
+        <!--&gt;-->
+            <!--<ul class="nsa-pagination">-->
+                <!--<li class="nsa-pagination__page-item disabled">-->
+                    <!--<a class="nsa-pagination__page-link" href="#" aria-label="Previous All">-->
+                        <!--<span aria-hidden="true">«</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li class="nsa-pagination__page-item disabled">-->
+                    <!--<a class="nsa-pagination__page-link" href="#" aria-label="Previous">-->
+                        <!--<span aria-hidden="true">‹</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li class="nsa-pagination__page-item active">-->
+                    <!--<a class="nsa-pagination__page-link" href="#">-->
+                        <!--1-->
+                        <!--<span class="sr-only">current page</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li class="nsa-pagination__page-item">-->
+                    <!--<a class="nsa-pagination__page-link" href="#">-->
+                        <!--2-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li class="nsa-pagination__page-item">-->
+                    <!--<a class="nsa-pagination__page-link" href="#" aria-label="Next">-->
+                        <!--<span aria-hidden="true">›</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li class="nsa-pagination__page-item">-->
+                    <!--<a class="nsa-pagination__page-link" href="#" aria-label="Next All">-->
+                        <!--<span aria-hidden="true">»</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</nav>-->
+    </section>
+</article>

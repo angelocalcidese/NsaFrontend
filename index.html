@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<link href="http://fonts.googleapis.com/css?family=Raleway:300" rel="stylesheet" />
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+	<!-- CSS -->
+	<link rel="stylesheet" href="js/bootstrap/dist/css/bootstrap.css" />
+	<link href="css/main.css" rel="stylesheet" />
+	<link href="css/custom.css" rel="stylesheet" />
+
+
+</head>
+<body id="body-root"
+	  ng-app="nsaApp"
+	  ng-controller="nsaController"
+	  ng-click="controlloClick($event)"
+	  ng-strict-di
+>
+<div id="root">
+	<div id="layout-page-scaffolding-container">
+		<div class="sidemenu-container">
+			<div class="body" id="page-container">
+				<div class="page-section orders-in-progress-container">
+					<div class="page-section orders-in-progress-page">
+						<div class="nsa-container">
+							<aside id="js-nsa-sidebar" class="nsa-sidebar"  ui-view="sidebar">
+
+							</aside>
+							<div class="content-page">
+								<div ui-view="header"></div>
+								<!--<header class="nsa-header nsa-header&#45;&#45;mh" ui-view="header">-->
+
+								<!--</header>-->
+								<!--<div ui-view="body" style="background: #f6f6f6;"></div>-->
+								<main class="" ui-view="body" style="" ng-class="stepperView ? 'step-views' : 'l-main'">
+
+								</main>
+								<div class="nsa-footer" ></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- risorse statiche -->
+<script type="text/javascript" src="js/angularjs/angular.js"></script>
+<script type="text/javascript" src="js/angular-ui-router/release/angular-ui-router.js"></script>
+<script type="text/javascript" src="js/angular-utils-pagination/dirPagination.js"></script>
+<script type="text/javascript" src="js/angular-animate/angular-animate.js"></script>
+<script type="text/javascript" src="js/angular-sanitize/angular-sanitize.js"></script>
+<script type="text/javascript" src="js/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="assets/datepicker/it.js"></script>
+
+<!-- risorse dinamiche -->
+<script type="text/javascript" src="app.module.js"></script>
+<script type="text/javascript" src="confService.js"></script>
+<script type="text/javascript" src="route.js"></script>
+<script type="text/javascript" src="app.controller.js"></script>
+<script type="text/javascript" src="service/service.js"></script>
+<script type="text/javascript" src="directive/modal/modal.js"></script>
+<script type="text/javascript" src="directive/table/table.js"></script>
+<script type="text/javascript" src="directive/card/card.js"></script>
+<script type="text/javascript" src="directive/stepper/stepper.js"></script>
+
+<!-- CONTROLLER PAGINE -->
+<script type="text/javascript" src="controller/profile/detailuser/controller.js"></script>
+<script type="text/javascript" src="controller/profile/detailgroup/controller.js"></script>
+<script type="text/javascript" src="controller/profile/detailrole/controller.js"></script>
+<script type="text/javascript" src="controller/profile/detailunit/controller.js"></script>
+<script type="text/javascript" src="controller/profile/elencouser/controller.js"></script>
+<script type="text/javascript" src="controller/profile/application/controller.js"></script>
+<script type="text/javascript" src="controller/profile/detailapp/controller.js"></script>
+<script type="text/javascript" src="controller/process/workingprogres/controller.js"></script>
+<script type="text/javascript" src="controller/process/working/controller.js"></script>
+<script type="text/javascript" src="controller/login/controller.js"></script>
+<!--<script type="text/javascript" src="controller/controller.min.js"></script>-->
+</body>
+
+</html>
+

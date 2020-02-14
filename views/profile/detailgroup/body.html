@@ -1,0 +1,100 @@
+    <div class="l-flex-between u-mt-25">
+    <a href="" class="nsa-link-24-500">{{groupdetail.name}}</a>
+    <a href="" class="nsa-button-link nsa-button-link--is-posr"
+       ng-click="filtroDetail(tab)"
+       ng-hide="searchActive"
+       title="Filtra per"
+    >
+        <span class="icomoon icomoon-filter"></span>
+        <span class="nsa-button-link__text">Filtra per</span>
+    </a>
+    <a href="" class="nsa-button-link nsa-button-link--is-posr"
+       ng-click="azzeraSearch()"
+       ng-show="searchActive"
+       title="Azzera filtri"
+    >
+        <span class="icomoon icomoon-filter"></span>
+        <span class="nsa-button-link__text">Azzera Filtri</span>
+    </a>
+</div>
+
+<p class="nsa-t-16-400 u-regular-gray" ng-if="membersdetail.length == 0 || membersdetail.length > 1">Ha <strong>{{membersdetail.length}}</strong> membri associati</p>
+<p class="nsa-t-16-400 u-regular-gray" ng-if="membersdetail.length == 1">Ha <strong>{{membersdetail.length}}</strong> membro associato</p>
+<p class="nsa-t-16-400 u-regular-gray" ng-if="rolesdetail.length == 0 || rolesdetail.length > 1">Ha <strong>{{rolesdetail.length}}</strong> ruoli associati</p>
+<p class="nsa-t-16-400 u-regular-gray" ng-if="rolesdetail.length == 1">Ha <strong>{{rolesdetail.length}}</strong> ruolo associato</p>
+<!-- qua ci sarà il carosello -->
+<div class="d-flex row">
+    <div class="col-sm-4">
+        <div class="alert alert-success" ng-show="viewMessage=='OK'">
+            <div class="alert__content">
+                {{messageResponse}}
+            </div>
+        </div>
+        <div class="alert alert-danger"  ng-show="viewMessage=='KO'">
+            <div class="alert__content">
+                {{messageResponse}}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="nsa-carousel">
+    <div class="swiper-container swiper-container-initialized swiper-container-horizontal">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide" ng-class="tab == 'users' ? 'swiper-slide-active' : 'swiper-slide-next'" ng-click="tab = 'users';azzeraSearch()" style="width: 116.667px;">
+                <div class="tab " ng-class="tab == 'users' ? 'is-active' : ''">Utenti</div>
+            </div>
+            <div class="swiper-slide" ng-class="tab == 'roles' ? 'swiper-slide-active' : 'swiper-slide-next'" ng-click="tab = 'roles';azzeraSearch()" style="width: 116.667px;">
+                <div class="tab" ng-class="tab == 'roles' ? 'is-active' : ''">Ruoli</div>
+            </div>
+        </div>
+
+        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+    <!-- If we need navigation buttons -->
+    <!--<div class="swiper-button-prev swiper-button-disabled" tabindex="0" role="button" aria-label="Previous slide" aria-disabled="true"></div>-->
+    <!--<div class="swiper-button-next swiper-button-disabled" tabindex="0" role="button" aria-label="Next slide" aria-disabled="false"></div>-->
+</div>
+
+<!-- carosello -->
+<div ng-if="tab == 'users'">
+<!-- CARD -->
+<nsa-card
+        dettaglio="groupdetail"
+        dettaglio-voice="cardDetailVoice"
+        cards="membersdetail"
+        card-voice="cardVoiceGroup"
+        action-bottom="eliminaCardMembers"
+        action-fun-dett="editaMembersCard"
+        show-spinner="spinnerCard"
+        search-element="searchElement"
+></nsa-card>
+<div class="mx-auto u-mt-15 u-mb-10 center-block">
+    <button type="button" class="btn btn-outline-secondary center-block"
+            ng-if="controlProfile('PROFILE', 'U')"
+            ng-click="addUserToGroup()">
+        aggiungi Utenti al Gruppo
+    </button>
+</div>
+</div>
+<div ng-if="tab == 'roles'">
+<!-- CARD -->
+<nsa-card
+        dettaglio="groupdetail"
+        dettaglio-voice="cardDetailVoice"
+        cards="rolesdetail"
+        card-voice="cardVoiceRole"
+        action-bottom="eliminaCardRoleGroup"
+        action-fun-dett="editaUserCard"
+        show-spinner="spinnerCard"
+        search-element="searchElement"
+></nsa-card>
+<div class="mx-auto u-mt-15 u-mb-10 center-block">
+    <button type="button" class="btn btn-outline-secondary center-block"
+            ng-if="controlProfile('PROFILE', 'U')"
+            ng-click="viewsRolesGroup()">
+        aggiungi nuovo ruolo
+    </button>
+</div>
+</div>

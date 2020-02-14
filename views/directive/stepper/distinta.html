@@ -1,0 +1,144 @@
+<div  style="min-height: 480px;">
+
+    <div class="l-flex-between ">
+        <div aria-label="breadcrumb" class="nsa-breadcrumb-container" >
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">
+                    <a href="">{{stepNumber}}{{sottostepNumber}} {{formData.title}}</a>
+                </li>
+            </ol>
+        </div>
+        <div class="scanner-container">
+                            <span class="scanner-container__title">
+                              Scanner pronto
+                            </span>
+            <span class="scanner-container__img-scanner">
+                              <span class="icomoon icomoon-ok"></span>
+                            </span>
+        </div>
+    </div>
+
+    <div class="row l-flex-end u-mt-20">
+        <div class="col-sm-5">
+            <div class="nsa-input is-disabled" >
+                <label class="nsa-input__label nsa-input__label__btn-plus" for="input--6">CODICE OGGETTO</label>
+                <div class="nsa-input__button-add-container">
+                    <input type="input" class="nsa-input__input" id="input--6" placeholder="Inserisci codice" value="" disabled="">
+                    <button type="button" class="" disabled="">
+                        <span>+</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="nsa-button-upload-file is-disabled" >
+                <div class="file-upload">
+                    <input type="file" disabled="">
+                    <span class="icomoon icomoon-upload"></span>
+                    <span>carica distinta</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+
+    <div class="row l-flex-end  u-mt-35">
+        <div class="col-sm-4">
+            <div class="nsa-input has-border">
+                <label class="nsa-input__label" for="input-1">Primo codice</label>
+                <input type="input"  ng-model="formData.data.primocodice" class="nsa-input__input nsa-input__input--has-cross nsa-input__input--is-valid-code" id="input-1"  placeholder="">
+                <a href="" class="nsa-input__cross nsa-input__cross--is-valid-code">
+                    <span class="icomoon icomoon-cross"></span>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="nsa-input has-border">
+                <label class="nsa-input__label" for="input-1">Ultimo codice</label>
+                <input type="input" ng-model="formData.data.ultimocodice" class="nsa-input__input nsa-input__input--has-cross nsa-input__input--is-valid-code" id="input-1" value="OGG87654321087654321" placeholder="">
+                <a href="" class="nsa-input__cross nsa-input__cross--is-valid-code">
+                    <span class="icomoon icomoon-cross"></span>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="loader-container">
+                <span class="icomoon icomoon-mark"></span>
+                <div class="loader-container__text">
+                    Controllo NPSO <br>
+                    eseguito con successo
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row l-flex-between  u-mt-55">
+        <div class="col-sm-4">
+            <span class="code-jump">Sono presenti salti di codice?</span>
+        </div>
+
+        <div class="col-sm-5">
+            <div class="l-flex-between">
+                <button type="button" class="btn btn-outline-secondary more-pd-left" >
+                    range
+                    <span class="icomoon left icomoon-cross"></span>
+                </button>
+                <button type="button" class="btn btn-outline-secondary more-pd-left">
+                    singoli dati
+                    <span class="icomoon left icomoon-cross"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row l-flex-end u-mt-30 ">
+        <div class="col-sm-4">
+            <div class="nsa-input has-border" >
+                <label class="nsa-input__label" for="input-1">Range</label>
+                <input type="input" ng-model="dataStep.step[indexstep].data.rangestart" class="nsa-input__input" id="input-1"  placeholder="" readonly="">
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="nsa-input has-border" >
+                <label class="nsa-input__label" for="input-1"></label>
+                <input type="input" ng-model="dataStep.step[indexstep].data.rangefinish" class="nsa-input__input" id="input-1" placeholder="" readonly="">
+            </div>
+        </div>
+    </div>
+
+    <div class="row l-flex-end  u-mt-35">
+        <div class="col-sm-4">
+            <div class="nsa-input has-border">
+                <label class="nsa-input__label" for="input-1">Singoli salti</label>
+                <input type="input" class="nsa-input__input" ng-model="dataStep.step[indexstep].data.singledata" id="input-1" placeholder="">
+            </div>
+        </div>
+    </div>
+
+    <div class="row l-flex-end  u-mt-55">
+        <div class="col-sm-4">
+            <div class="loader-container" >
+                <span class="icomoon icomoon-mark"></span>
+                <div class="loader-container__text">
+                    Controllo T&amp;T eseguito con successo
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nsa-column__footer">
+        <button type="button" class="btn btn-outline-secondary" >
+            anomalie
+        </button>
+        <div class="l-flex-between u-w-30">
+            <a href="" class="nsa-button-link " title="Salva e chiudi" >
+                <span class="nsa-link-14-500 nsa-link--has-underline">Salva e chiudi</span>
+                <span class="icomoon icomoon-"></span>
+            </a>
+            <button type="button" class="btn btn-navigation " >
+                crea distinta
+            </button>
+        </div>
+    </div>
+</div>

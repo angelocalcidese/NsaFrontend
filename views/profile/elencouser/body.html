@@ -1,0 +1,161 @@
+    <h1 class="nsa-title-page u-mt-40">Gestione Profilazione</h1>
+    <div class="">
+        <button type="button" ng-if="tabActive == 'users' && controlProfile('PROFILE', 'C')" class="btn btn-outline-primary pull-right" ng-click="createUserModal()">
+            Nuovo Utente
+        </button>
+        <button type="button" ng-if="tabActive == 'groups'&& controlProfile('PROFILE', 'C')" class="btn btn-outline-primary pull-right" ng-click="createGroupModal()">
+            Nuovo Gruppo
+        </button>
+        <!--<button type="button" ng-if="tabActive == 'units'&& controlProfile('PROFILE', 'C')" class="btn btn-outline-primary pull-right" ng-click="createUnitModal()">-->
+            <!--Nuova Unità Territoriale-->
+        <!--</button>-->
+    </div>
+    <div class="u-mt-15 u-pos-relative l-flex-center">
+        <div class="nav nsa-nav-tabs" >
+            <a href="" ng-click=" changeTab('users');" class="nsa-nav-tabs__item" ng-class="tabActive == 'users' ? 'active' : ''"data-target="#tab1" data-toggle="tab">
+                Utenti ({{users.length}})
+            </a>
+            <a href="" ng-click="changeTab('units');" class="nsa-nav-tabs__item" ng-class="tabActive == 'units' ? 'active' : ''" data-target="#tab2" data-toggle="tab">
+                unità territoriale ({{units.length}})
+            </a>
+            <a href="" ng-click="changeTab('groups');" class="nsa-nav-tabs__item" ng-class="tabActive == 'groups' ? 'active' : ''" data-target="#tab2" data-toggle="tab">
+                gruppi ({{groups.length}})
+            </a>
+            <a href="" ng-click="changeTab('roles');" class="nsa-nav-tabs__item" ng-class="tabActive == 'roles' ? 'active' : ''"data-target="#tab3" data-toggle="tab">
+                ruoli ({{roles.length}})
+            </a>
+        </div>
+        <div class="u-pos-absolute pos-bl">
+            <!--<button type="button" ng-if="tabActive == 'users' && controlProfile('PROFILE', 'C')" class="btn btn-outline-primary pull-right" ng-click="createUserModal()">-->
+                <!--Nuovo Utente-->
+            <!--</button>-->
+            <!--<button type="button" ng-if="tabActive == 'groups'&& controlProfile('PROFILE', 'C')" class="btn btn-outline-primary pull-right" ng-click="createGroupModal()">-->
+                <!--Nuovo Gruppo-->
+            <!--</button>-->
+            <!--<button type="button" ng-if="tabActive == 'units'&& controlProfile('PROFILE', 'C')" class="btn btn-outline-primary pull-right" ng-click="createUnitModal()">-->
+                <!--Nuova Unità Territoriale-->
+            <!--</button>-->
+            <!--<button type="button" ng-if="tabActive == 'roles'" class="btn btn-outline-primary pull-right" ng-click="createRoleModal()">-->
+                <!--Nuovo Ruolo-->
+            <!--</button>-->
+            <a href="" class="nsa-button-link " ng-hide="searchActive" title="Filtra per" ng-click="filterTable(tabSelected)">
+                <span class="nsa-link-14-500 nsa-link--has-underline">Filtra per</span>
+                <span class="icomoon icomoon-filter"></span>
+            </a>
+            <a href="" class="nsa-button-link " ng-show="searchActive" title="Filtra per" ng-click="searchElement=''; searchActive= false">
+                <span class="nsa-link-14-500 nsa-link--has-underline">Azzera filtri</span>
+                <span class="icomoon icomoon-filter"></span>
+            </a>
+        </div>
+    </div>
+    <!--TABELLA UTENTI-->
+    <div ng-if="tabActive == 'users'">
+    <div class="d-flex row">
+        <div class="col-sm-4">
+        <div class="alert alert-success" ng-show="viewMessage=='OK'">
+            <div class="alert__content">
+                {{messageResponse}}
+            </div>
+        </div>
+        <div class="alert alert-danger"  ng-show="viewMessage=='KO'">
+            <div class="alert__content">
+                {{messageResponse}}
+            </div>
+        </div>
+        </div>
+    </div>
+    <nsa-table
+            dati="users"
+            custom-header="headerTableUsers"
+            detail-views="modalFormUser"
+            tipologia="tipologia"
+            show-spinner="spinOn"
+            function-edit="editUser"
+            function-detail="detailUser"
+            search-element="searchElement"
+            table-name="utenti"
+    ></nsa-table>
+    </div>
+    <!--TABELLA UNITà territoriale-->
+    <div ng-if="tabActive == 'units'">
+    <div class="d-flex row">
+        <div class="col-sm-4">
+        <div class="alert alert-success" ng-show="viewMessage=='OK'">
+            <div class="alert__content">
+                {{messageResponse}}
+            </div>
+        </div>
+        <div class="alert alert-danger"  ng-show="viewMessage=='KO'">
+            <div class="alert__content">
+                {{messageResponse}}
+            </div>
+        </div>
+        </div>
+    </div>
+    <nsa-table
+            dati="units"
+            custom-header="headerTableUnits"
+            detail-views="modalFormUnit"
+            tipologia="tipologia"
+            show-spinner="spinOn4"
+            function-detail="detailUnit"
+            search-element="searchElement"
+            table-name="unita"
+    ></nsa-table>
+    </div>
+    <!--TABELLA GRUPPI-->
+    <div ng-if="tabActive == 'groups'">
+    <div class="d-flex row">
+        <div class="col-sm-4">
+        <div class="alert alert-success" ng-show="viewMessage=='OK'">
+            <div class="alert__content">
+                {{messageResponse}}
+            </div>
+        </div>
+        <div class="alert alert-danger"  ng-show="viewMessage=='KO'">
+            <div class="alert__content">
+                {{messageResponse}}
+            </div>
+        </div>
+        </div>
+    </div>
+    <nsa-table
+            dati="groups"
+            custom-header="headerTableGroups"
+            detail-views="modalFormGroup"
+            tipologia="tipologia"
+            show-spinner="spinOn2"
+            function-edit="editGroup"
+            function-detail="detailGroup"
+            search-element="searchElement"
+            table-name="gruppi"
+    ></nsa-table>
+    </div>
+    <!--RUOLI-->
+    <div ng-if="tabActive == 'roles'">
+    <div class="d-flex row">
+        <div class="col-sm-4">
+        <div class="alert alert-success" ng-show="viewMessage=='OK'">
+            <div class="alert__content">
+                {{messageResponse}}
+            </div>
+        </div>
+        <div class="alert alert-danger"  ng-show="viewMessage=='KO'">
+            <div class="alert__content">
+                {{messageResponse}}
+            </div>
+        </div>
+        </div>
+    </div>
+    <nsa-table
+            dati="roles"
+            custom-header="headerTableRoles"
+            detail-views="modalFormRole"
+            tipologia="tipologia"
+            show-spinner="spinOn3"
+            function-edit="editRole"
+            function-detail="detailRole"
+            search-element="searchElement"
+            table-name="ruoli"
+    ></nsa-table>
+    </div>

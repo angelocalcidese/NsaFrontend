@@ -1,0 +1,37 @@
+<main class="l-main" style="overflow-x:hidden"><h2 class="t-intestation u-pt-15">Accesso Utente</h2>
+
+    <div class="nsa-dropdown col-sm-3" >
+        <label class="nsa-dropdown__label">
+            Seleziona l'utente da utilizzare
+        </label>
+        <div class="ss-main nsa-dropdown__select pull-center"
+            >
+            <div class="ss-single-selected" ng-click="item.open = !item.open">
+                <span class="placeholder" ng-if="!utSel">seleziona tipo</span>
+                <span class="placeholder" ng-if="utSel"
+                      ng-repeat="val in users | filter:{username:utente}"
+                      ng-show="$index<1">
+                                            {{val.username}}
+                                        </span>
+                <span class="ss-deselect ss-hide">x</span>
+                <span class="ss-arrow">
+                                            <span ng-class="item.open ? 'arrow-up' : 'arrow-down'"></span>
+                                        </span>
+            </div>
+            <div class="ss-content " ng-class="item.open ? 'ss-open' : ''">
+                <div class="ss-search ss-hide">
+                    <input readonly="" type="search" placeholder="Search" tabindex="0" aria-label="Search">
+                </div>
+                <div class="ss-list ">
+                    <div class="ss-option ss-disabled ss-option-selected">seleziona tipo</div>
+                    <div class="ss-option"
+                         ng-repeat="opt in users"
+                         ng-click="chooseApp(opt); item.open = !item.open;" >
+                        {{opt.username}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>

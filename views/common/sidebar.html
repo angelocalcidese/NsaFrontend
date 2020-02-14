@@ -1,0 +1,148 @@
+<aside id="js-nsa-sidebar" class="nsa-sidebar" ng-class="apriMenu == true ? 'is-open' : ''"  >
+    <div class="nsa-sidebar__container">
+        <a href="#" class="nsa-sidebar__logo">nsa</a>
+        <div class="nsa-sidebar__container-items" ng-if="operatore">
+            <div class="nsa-sidebar__items">
+                <div class="wrap-item" ng-click="controlloMenu('activity');">
+                    <span class="nsa-sidebar__item icomoon icomoon-activity" data-menu="activity" ng-class="typeMenu == 'activity' ? 'is-active' : ''"></span>
+                </div>
+                <div class="wrap-item" data-has-stepper=""  ng-show="stepperView">
+                    <span ng-click="controlloMenu('orders');"
+                          class="icomoon icomoon-order-in-ad nsa-sidebar__item"
+                          data-menu="orders"
+                          ng-class="typeMenu == 'orders' ? 'is-active' : ''"
+
+                    >
+                    </span>
+                    <div
+                            class="nsa-stepper nsa-sidebar__item"
+                            data-menu="orders"
+                            id="js-nsa-stepper"
+                    >
+                        <div class="nsa-stepper__step"
+                             ng-repeat="(indexstep, step) in dataStep.step"
+                             ng-class="{'current': stepCircle[indexstep]}"
+
+                        >
+
+                            <div class="v-stepper">
+                                <div class="v-stepper__line"></div>
+                                <div class="v-stepper__circle"
+                                     ng-click="resetBall(indexstep);"
+                                >
+                                    <div class="number">{{indexstep + 1}}</div>
+                                </div>
+                                <div class="substepper-wrapper" ng-if="step.step.length > 0">
+                                    <div ng-repeat="ustep in step.step"
+                                         class="sottostepper"
+                                         data-parent="{{$index}}"
+                                         data-sub-index="{{$index}}"
+                                         ng-class="{'is-active' :stepCircle[indexstep][$index]}"
+                                         ng-click="resetBall(indexstep, $index)"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+            </div>
+            </div>
+            </div>
+            <div class="nsa-sidebar__items nsa-sidebar__items--has-bt">
+                <div class="wrap-item" ng-click="controlloMenu('user');">
+                    <span class="icomoon icomoon-user nsa-sidebar__item" data-menu="user" ng-class="typeMenu == 'user' ? 'is-active' : ''"></span>
+                </div>
+                <div class="wrap-item">
+                    <span class="icomoon icomoon-logout nsa-sidebar__item nsa-sidebar__item--logout" ng-click="logOut();controlloMenu();"></span>
+                </div>
+            </div>
+                </div>
+
+    </div>
+
+    <div class="nsa-menu-expanded" >
+        <div class="nsa-menu-expanded__content">
+            <div class="nsa-menu-expanded__close" ng-click="controlloMenu(); ">
+                <span class="icomoon icomoon-cross"></span>
+            </div>
+            <div class="nsa-menu-expanded__header">
+                <span class="icomoon icomoon-calendar-clock"></span>
+                <p class="nsa-menu-expanded__title">Nuovo Sistema Accettazione</p>
+                <div class="nsa-menu-expanded__information-date">
+                    <!--<span>{{today | date:'EEEE d MMMM yyyy'}}</span>-->
+                    <span>{{esponiData}}</span>
+                    <span>Ore: {{today | date:'H:mm'}}</span>
+                </div>
+            </div>
+
+            <div class="nsa-menu-expanded__body">
+                <section data-content-menu="activity" class="box-item" ng-class="typeMenu == 'activity' ? 'l-flex' : ''">
+                    <h1 class="title">attività</h1>
+                    <ul class="order-list">
+                        <li class="order-list__item order-list__item--in-progress "
+                            ng-if="controlProfile('ACCEPTANCE', 'R')"
+                            ng-click="goTo('root.workingprogres');">
+                            <a href="">Ordine in lavorazione</a>
+                        </li>
+                        <!--<li class="order-list__item order-list__item&#45;&#45;reservations" ng-if="ruoli['ACCEPTANCE']">-->
+                            <!--<a href="">Ordini e Prenotazioni</a>-->
+                        <!--</li>-->
+                        <li class="order-list__item order-list__item--reservations is-selected"
+                            ng-if="controlProfile('APPLICATION', 'R')"
+                            ng-click="goTo('root.application');">
+                            <a href="">Gestione Amministratore</a>
+                        </li>
+                        <li class="order-list__item order-list__item--reservations is-selected"
+                            ng-if="controlProfile('PROFILE', 'R')"
+                            ng-click="goTo('root.elencouser');">
+                            <a href="">Gestione Profilazione</a>
+                        </li>
+                    </ul>
+                </section>
+
+                <section data-content-menu="orders" class="box-item" ng-class="typeMenu == 'orders' ? 'l-flex' : ''">
+                    <h1 class="title">ordine n°4102440</h1>
+                    <ol class="order-list order-list--type-number">
+                        <li class="order-list__item" data-content-index="0"
+                            ng-repeat="(indexstep, step) in dataStep.step"
+                            ng-class="{'is-selected': stepCircle[indexstep]}"
+                        >
+                            <a href="" class="order-list__item__link" ng-click="resetBall(indexstep);">{{step.title}}</a>
+                            <ol  ng-if="step.step.length > 0">
+                            <li class="substepper-content "
+                                ng-repeat="ustep in step.step"
+                                ng-class="{'is-selected' :stepCircle[indexstep][$index]}"
+                                data-content-sub-index="{{$index}}">
+                            <a href=""  ng-click="resetBall(indexstep, $index)">{{ustep.title}}</a>
+                            </li>
+
+                            </ol>
+                        </li>
+                    </ol>
+                </section>
+
+                <section data-content-menu="user" class="box-item box-item--user" ng-class="typeMenu == 'user' ? 'l-flex' : ''">
+                    <h1 class="title">{{operatore.user.name}} {{operatore.user.surname}}</h1>
+                    <!--<span class="subtitle">{{operatore.roles[0].shortDescription}}</span>-->
+                    <div class="box-logout" >
+                              <span class="subtitle">
+                               {{operatore.roles[0].shortDescription}}
+                              </span>
+                        <a href="">
+                            <span class="icomoon icomoon-reaload" ng-click="loggaUtente(operatore.user.username, nomeApp, 'role'); closeMenu()"></span>
+                        </a>
+                    </div>
+                    <div class="box-logout" >
+                              <span>
+                                <span class="icomoon icomoon-cmp"></span>
+                                {{operatore.user.zona || 'Nessuna CMP'}}
+                              </span>
+                        <a href=""  >
+                            <span class="icomoon icomoon-reaload" ng-click="loggaUtente(operatore.user.username, nomeApp, 'cmp'); closeMenu()"></span>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</aside>

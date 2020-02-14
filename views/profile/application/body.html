@@ -1,0 +1,72 @@
+    <h1 class="nsa-title-page u-mt-40">Gestione Amministratore</h1>
+    <div class="u-mt-15 u-pos-relative l-flex-center">
+        <div class="nav nsa-nav-tabs" >
+            <a href="" ng-click="changeTabAdm('application');" class="nsa-nav-tabs__item" ng-class="tabActiveAdm == 'application' ? 'active' : ''" data-target="#tab1" data-toggle="tab">
+                Applicazioni ({{applications.length}})
+            </a>
+            <a href="" ng-click=" changeTabAdm('users');" class="nsa-nav-tabs__item" ng-class="tabActiveAdm == 'users' ? 'active' : ''"data-target="#tab2" data-toggle="tab">
+                Utenti ({{users.length}})
+            </a>
+
+        </div>
+        <div class="u-pos-absolute pos-bl">
+            <button type="button" ng-if="tabActiveAdm == 'application'" class="btn btn-outline-primary pull-right" ng-click="createApps()">
+                Nuova Applicazione
+            </button>
+            <button type="button" ng-if="tabActiveAdm == 'users'" class="btn btn-outline-primary pull-right" ng-click="createUserModal()">
+                Nuovo Utente
+            </button>
+
+        </div>
+    </div>
+    <!--TABELLA Applicazioni-->
+    <div ng-if="tabActiveAdm == 'application'">
+    <div class="d-flex row">
+        <div class="col-sm-4">
+        <div class="alert alert-success" ng-show="viewMessage=='OK'">
+            <div class="alert__content">
+                {{messageResponse}}
+            </div>
+        </div>
+        <div class="alert alert-danger"  ng-show="viewMessage=='KO'">
+            <div class="alert__content">
+                {{messageResponse}}
+            </div>
+        </div>
+        </div>
+    </div>
+    <nsa-table
+            dati="applications"
+            custom-header="headerTableApps"
+            tipologia="tipologia"
+            show-spinner="spinOn"
+            function-edit="editApp"
+            function-detail="detailApp"
+    ></nsa-table>
+    </div>
+
+    <div ng-if="tabActiveAdm == 'users'">
+        <div class="d-flex row">
+            <div class="col-sm-4">
+                <div class="alert alert-success" ng-show="viewMessage=='OK'">
+                    <div class="alert__content">
+                        {{messageResponse}}
+                    </div>
+                </div>
+                <div class="alert alert-danger"  ng-show="viewMessage=='KO'">
+                    <div class="alert__content">
+                        {{messageResponse}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nsa-table
+                dati="users"
+                custom-header="headerTableUsers"
+                detail-views="modalFormUser"
+                tipologia="tipologia"
+                show-spinner="spinOn"
+                function-edit="editUser"
+        ></nsa-table>
+    </div>
+    </div>

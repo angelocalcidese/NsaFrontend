@@ -1,0 +1,54 @@
+    <div class="l-flex-between u-mt-25">
+    <a href="" class="nsa-link-24-500">{{appdetails.name}}</a>
+</div>
+
+<p class="nsa-t-16-400 u-regular-gray" ng-if="membersdetail.length == 0 || membersdetail.length > 1">Ha <strong>{{membersdetail.length}}</strong> utenti associati</p>
+<p class="nsa-t-16-400 u-regular-gray" ng-if="membersdetail.length == 1">Ha <strong>{{membersdetail.length}}</strong> utente associato</p>
+<!-- qua ci sarà il carosello -->
+<div class="d-flex row">
+    <div class="col-sm-4">
+        <div class="alert alert-success" ng-show="viewMessage=='OK'">
+            <div class="alert__content">
+                {{messageResponse}}
+            </div>
+        </div>
+        <div class="alert alert-danger"  ng-show="viewMessage=='KO'">
+            <div class="alert__content">
+                {{messageResponse}}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="nsa-carousel">
+    <div class="swiper-container swiper-container-initialized swiper-container-horizontal">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide" ng-class="tab == 'utenti' ? 'swiper-slide-active' : 'swiper-slide-next'" ng-click="tab = 'utenti'" style="width: 116.667px;">
+                <div class="tab " ng-class="tab == 'utenti' ? 'is-active' : ''">Utenti</div>
+            </div>
+        </div>
+
+        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+</div>
+
+<!-- carosello -->
+<div ng-if="tab == 'utenti'">
+<!-- CARD -->
+<nsa-card
+        dettaglio="appdetails"
+        dettaglio-voice="cardDetailVoice"
+        cards="membersdetail"
+        card-voice="cardVoiceApp"
+        action-bottom="eliminaCardMembers"
+        action-fun-dett="editaMembersCard"
+        show-spinner="spinnerCard"
+></nsa-card>
+<div class="mx-auto u-mt-15 u-mb-10 center-block">
+    <button type="button" class="btn btn-outline-secondary center-block"
+            ng-click="addUserToApp()">
+        aggiungi Utenti all'Applicazione
+    </button>
+</div>
+</div>

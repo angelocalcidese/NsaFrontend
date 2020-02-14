@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="http://fonts.googleapis.com/css?family=Raleway:300" rel="stylesheet" />
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="js/bootstrap/dist/css/bootstrap.css" />
+    <link href="css/main.css" rel="stylesheet" />
+    <link href="css/custom.css" rel="stylesheet" />
+
+
+</head>
+<body id="body-root"
+      ng-cloak
+      ng-app="nsaApp"
+      ng-controller="nsaController"
+      ng-strict-di
+>
+<div id="root">
+    <div id="layout-page-scaffolding-container">
+        <div class="sidemenu-container">
+            <div class="body" id="page-container">
+                <div class="page-section orders-in-progress-container">
+                    <div class="page-section orders-in-progress-page">
+                        <div class="nsa-container">
+                            <aside id="js-nsa-sidebar" class="nsa-sidebar"  ui-view="sidebar">
+
+                            </aside>
+                            <div class="content-page">
+                                <header class="nsa-header nsa-header--mh" ui-view="header">
+
+                                </header>
+                                <main class="l-main" ui-view="body">
+
+                                </main>
+                                <div class="nsa-footer" ></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- risorse statiche -->
+<script type="text/javascript" src="js/angularjs/angular.js"></script>
+<script type="text/javascript" src="js/angular-ui-router/release/angular-ui-router.js"></script>
+<script type="text/javascript" src="js/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="js/angular-utils-pagination/dirPagination.js"></script>
+<!-- risorse dinamiche -->
+<script type="text/javascript" src="controller/controller.min.js"></script>
+</body>
+
+</html>
+

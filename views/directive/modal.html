@@ -1,0 +1,301 @@
+    <form name="modalForm">
+    <div class="modal-dialog modal-dialog-centered" role="document" ng-if="modalOptions.type != 'loader'">
+        <div class="">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal2-title">{{modalOptions.headerText}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="modalOptions.close()">
+                    <span class="icomoon icomoon-cross" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body" ng-if="modalOptions.type == 'confirm'">
+                <p class="nsa-t-12-400 u-text-transform u-mb-10">{{modalOptions.bodyText}}</p>
+            </div>
+            <div class="modal-body table-modal" ng-if="modalOptions.type == 'addTable'">
+                <div class="row">
+                    <div class="col-sm-4" ng-if="modalOptions.data.length > 1">
+                        <div class="u-mr-15">
+                            <div class="nsa-input " >
+                                <label class="nsa-input__label" for="input-1">Cerca</label>
+                                <input type="input" class="nsa-input__input" ng-model="formvalue.modalOptions.input.search" id="input1" placeholder="Cerca {{modalOptions.confElement.search}}" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                    <input type="hidden" ng-model="formvalue.modalOptions.input.name" required>
+                    <div class="container-radio-boxes" ng-repeat="data in modalOptions.data | filter: formvalue.modalOptions.input.search" style="padding:5px 0">
+                        <div class="nsa-radio-box" >
+                            <input class="nsa-radio-box__input" id="radio-box-{{$index}}"  ng-click="formvalue.modalOptions.input.name = data.name" name="radio-box" type="radio">
+                            <label class="nsa-radio-box__label" for="radio-box-{{$index}}">
+                                <div class="nsa-radio-box__content" title="{{data.description}}">
+                                    <p class="description">{{data[modalOptions.voiceView] || data.name}} </p>
+                                    <div class="info">
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                <br>
+                </div>
+            <div class="modal-body table-modal" ng-if="modalOptions.type == 'addTableItem'">
+                <div class="row">
+                    <div class="col-sm-4" ng-if="modalOptions.data.length > 1">
+                        <div class="u-mr-15">
+                            <div class="nsa-input " >
+                                <label class="nsa-input__label" for="input-1">Cerca</label>
+                                <input type="input" class="nsa-input__input" ng-model="formvalue.modalOptions.input.search" id="input1" placeholder="Cerca {{modalOptions.confElement.search}}" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                    <input type="hidden" ng-model="formvalue.modalOptions.input.value" required>
+                    <input type="hidden" ng-model="formvalue.modalOptions.input.default" >
+                    <div class="container-radio-boxes" ng-repeat="data in modalOptions.data | filter: formvalue.modalOptions.input.search" style="padding:5px 0">
+                        <div class="nsa-radio-box" >
+                            <input class="nsa-radio-box__input" id="radio-box-{{$index}}"  ng-click="formvalue.modalOptions.input.value = data; checkedElement($index, modalOptions.data.length)" name="radio-box" type="radio">
+                            <label class="nsa-radio-box__label" for="radio-box-{{$index}}">
+                                <div class="nsa-radio-box__content">
+                                    <p class="description">{{data.name}} <span ng-if="data.description">|</span> {{data.description}} <span ng-if="data.default"> - (Default)</span></p>
+                                    <div class="info">
+                                        <span ng-if="check[$index] && modalOptions.default"><label>Default</label></span>
+                                        <span ng-if="check[$index] && modalOptions.default"> <input  name="check-{{$index}}" id="check-{{$index}}"  ng-click="checkDefault(data)" type="checkbox"  value="true"></span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                <br>
+                </div>
+            <!-- INSERT -->
+            <div class="modal-body" ng-if="modalOptions.type == 'insert'">
+
+                    <div class="row row-margin">
+                        <input type="hidden" name="id" ng-if="modalOptions.data['id']" id="id" ng-model="formvalue.modalOptions.input['id']" ng-init="formvalue.modalOptions.input['id'] = modalOptions.data['id']" />
+                        <div class=" pad-input" ng-repeat="item in modalOptions.input"  ng-class="item.type == 'textarea' ? 'col-sm-12' : 'col-sm-6' ">
+                            <div class="nsa-input" ng-if="item.type != 'option' && item.type != 'textarea'">
+                            <label class="nsa-input__label " ng-if="item.type != 'textarea'" for="{{item.model}}" name="{{item.model}}">
+                                {{item.label}}</label>
+                            <input ng-if="item.type == 'text'"
+                                   type="input"
+                                   class="nsa-input__input"
+                                   maxlength="{{item.maxlength || 30}}"
+                                   id="{{item.model}}"
+                                   name="{{item.model}}"
+                                   ng-model="formvalue.modalOptions.input[item.model]"
+                                   ng-init="formvalue.modalOptions.input[item.model] = modalOptions.data[item.model]"
+                                   ng-required="item.required && !item.disabledMod"
+                                   ng-disabled="modalOptions.data['id'] && item.disabledMod"
+                                   placeholder="Inserisci" />
+                            <input ng-if="item.type == 'email'"
+                                   type="email"
+                                   class="nsa-input__input"
+                                   maxlength="{{item.maxlength || 30}}"
+                                   id="{{item.model}}"
+                                   name="{{item.model}}"
+                                   ng-model="formvalue.modalOptions.input[item.model]"
+                                   ng-init="formvalue.modalOptions.input[item.model] = modalOptions.data[item.model]"
+                                   ng-required="item.required && !item.disabledMod"
+                                   ng-disabled="modalOptions.data['id'] && item.disabledMod"
+                                   placeholder="Inserisci @email" />
+                                <div class="modal-body__radio-section" ng-if="item.type == 'radiobutton2'">
+                                    <div class="nsa-radio col-sm-6" >
+                                <input class="nsa-radio__input" type="radio" id="radio-1" ng-disabled="modalOptions.data['id'] && item.disabledMod" ng-click="formvalue.modalOptions.input[item.model] = true"  ng-checked="modalOptions.data[item.model] == true" value="true" name="radio-work-order">
+                                <label class="nsa-radio__label" for="radio-1">Si</label>
+                                </div>
+                                <div class="nsa-radio col-sm-6" >
+                                <input class="nsa-radio__input" type="radio" id="radio-2"  ng-disabled="modalOptions.data['id'] && item.disabledMod" ng-click="formvalue.modalOptions.input[item.model] = false" ng-checked="modalOptions.data[item.model] == false" value="false"  name="radio-work-order">
+                                <label class="nsa-radio__label" for="radio-2" >No</label>
+                                </div>
+                                    <input type="hidden" ng-model="formvalue.modalOptions.input[item.model]" ng-init="formvalue.modalOptions.input[item.model] = modalOptions.data[item.model]" ng-required="item.required" />
+                                </div>
+                            </div>
+                            <div class="nsa-textarea__container form-group" ng-if="item.type == 'textarea'">
+                                <label class="nsa-input__label " ng-if="item.type == 'textarea'" for="{{item.model}}" name="{{item.model}}">
+                                    {{item.label}}  ({{formvalue.modalOptions.input[item.model].length || 0}} / {{item.maxlength || 255}})</label>
+                                <textarea
+                                        name="{{item.model}}"
+                                        maxlength="{{item.maxlength || 255}}"
+                                        class="nsa-textarea__textarea form-control"
+                                        ng-model="formvalue.modalOptions.input[item.model]"
+                                        ng-init="formvalue.modalOptions.input[item.model] = modalOptions.data[item.model]"
+                                        ng-required="item.required && !item.disabledMod"
+                                        ng-disabled="modalOptions.data['id'] && item.disabledMod"
+                                        style="width:480px; max-width:480px;"
+                                >
+
+                                </textarea>
+                            </div>
+
+                            <div class="nsa-dropdown" ng-if="item.type == 'option'">
+                                <label for="{{item.model}}" class="nsa-dropdown__label">
+                                    {{item.label}}
+                                </label>
+                                <input type="hidden" ng-model="formvalue.modalOptions.input[item.model]" id="{{item.model}}"/>
+                                <div class="ss-main nsa-dropdown__select"
+                                     ng-init="formvalue.modalOptions.input[item.model] = modalOptions.data[item.model]">
+                                    <div class="ss-single-selected" ng-click="item.open = !item.open" ng-init="item.open=false">
+                                        <span class="placeholder" ng-if="(!modalOptions.data[item.model] && !formvalue.modalOptions.input[item.model]) || formvalue.modalOptions.input[item.model] == ''">seleziona tipo</span>
+                                        <span class="placeholder" ng-if="(modalOptions.data[item.model] || formvalue.modalOptions.input[item.model]) && formvalue.modalOptions.input[item.model] != ''"
+                                              ng-repeat="val in item.option | filter:{entityId:formvalue.modalOptions.input[item.model]}"
+                                                ng-show="$index<1">
+                                            {{val.entityValue}}
+                                        </span>
+                                        <span class="ss-deselect ss-hide">x</span>
+                                        <span class="ss-arrow">
+                                            <span ng-class="item.open ? 'arrow-up' : 'arrow-down'"></span>
+                                        </span>
+                                    </div>
+                                    <div class="ss-content " ng-class="item.open ? 'ss-open' : ''">
+                                        <div class="ss-search ss-hide">
+                                            <input readonly="" type="search" placeholder="Search" tabindex="0" aria-label="Search">
+                                        </div>
+                                        <div class="ss-list ">
+                                            <div class="ss-option"
+                                                 ng-click="formvalue.modalOptions.input[item.model] = ''; item.open = !item.open;"
+                                            >seleziona tipo</div>
+                                            <div class="ss-option"
+                                                 ng-repeat="opt in item.option"
+                                                 ng-show="opt.entityId != modalOptions.data['id']"
+                                                 ng-click="formvalue.modalOptions.input[item.model] = opt.entityId; item.open = !item.open;" >
+                                                {{opt.entityValue}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+
+            <!-- END INSERT -->
+            <!-- ADD TO -->
+            <div class="modal-body table-modal" ng-if="modalOptions.type == 'addToTable'">
+                <div class="container-modal">
+                    <div class="row">
+                        <div class="col-sm-4" ng-if="modalOptions.confElement.search">
+                            <div class="u-mr-15">
+                                <div class="nsa-input" >
+                                    <label class="nsa-input__label" for="input-1">Cerca {{modalOptions.confElement.search}}</label>
+                                    <input type="input" class="nsa-input__input" ng-model="formvalue.modalOptions.input.search" id="input-1" placeholder="Cerca {{modalOptions.confElement.search}}" >
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+
+                        <table class="nsa-table nsa-table-orders " >
+                            <thead class="nsa-table__intestation ">
+                            <tr>
+
+                                <th ng-repeat="voice in modalOptions.headerTable" class="nsa-table__intestation__item tw-60 nsa-table__intestation__item--has-sorter ">
+                                    {{voice.value}}
+                                </th>
+
+
+                            </tr>
+                            </thead>
+                            <tbody class="nsa-table__content  ">
+                            <tr ng-repeat="item in modalOptions.elementAdd | filter: formvalue.modalOptions.input.search">
+                                <td class="nsa-table__content__item" ng-repeat="input in modalOptions.headerTable">
+                                    <div class="wrap" ng-if="input.type == 'checkbox'">
+                                        <div class="u-mr-25" >
+                                            <div class="nsa-checkbox">
+                                                <input class="nsa-checkbox__input" ng-click="addToList(item)" type="checkbox" id="check{{item[input.key]}}" name="check-{{item[input.key]}}" ng-checked="cercaCheck(item.id)">
+                                                <label class="nsa-checkbox__label" for="check{{item[input.key]}}">{{item[input.key]}} </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="wrap" ng-if="input.type == 'text'">
+                                        {{item[input.key]}}
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- END ATT TO -->
+            <!-- DETAIL -->
+            <!--<div class="modal-body" ng-if="modalOptions.type == 'detail'">-->
+
+                    <!--<div class="row row-margin">-->
+                        <!--<div class="col-sm-6 pad-input" ng-repeat="item in modalOptions.input" >-->
+                            <!--<div class="nsa-input" >-->
+                            <!--<label class="nsa-input__label " for="{{item.model}}" name="{{item.model}}">-->
+                                <!--{{item.label}}</label>-->
+                            <!--<input ng-if="item.type == 'text'" type="input" class="nsa-input__input" id="{{item.model}}" name="{{item.model}}" value="{{modalOptions.data[item.model]}}" ng-disabled="true" >-->
+
+                                <!--<div class="modal-body__radio-section" ng-if="item.type == 'radiobutton2'">-->
+                                <!--<div class="nsa-radio col-sm-6" >-->
+                                <!--<input class="nsa-radio__input" type="radio"  id="radio-1" ng-checked="modalOptions.data[item.model] == true" value="true" name="radio-work-order" aria-checked="false" ng-disabled="true">-->
+                                <!--<label class="nsa-radio__label" for="radio-1">Si</label>-->
+                                <!--</div>-->
+
+                                <!--<div class="nsa-radio col-sm-6" >-->
+                                <!--<input class="nsa-radio__input" type="radio" id="radio-2" ng-checked="modalOptions.data[item.model] == false" value="false" name="radio-work-order" aria-checked="false" ng-disabled="true">-->
+                                <!--<label class="nsa-radio__label" for="radio-2">No</label>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+
+            <!--</div>-->
+            <!-- END DETAIL -->
+            <div class="modal-footer" >
+                <div class="col-sm-6">
+
+                    <button type="button" class="btn btn-outline-primary pull-right" ng-click="modalOptions.close()">
+                    annulla
+                    </button>
+                </div>
+                <div class="col-sm-6" >
+                    <button type="button" class="btn btn-primary"
+                            ng-if="modalOptions.type != 'addToTable'"
+                            ng-disabled="!modalForm.$valid"
+                            ng-click="modalOptions.ok(formvalue.modalOptions.input)">
+                        {{modalOptions.buttonOk || 'applica'}}
+                    </button>
+                    <button type="button" class="btn btn-primary"
+                            ng-if="modalOptions.type == 'addToTable'"
+                            ng-click="modalOptions.ok(listSelected)">
+                        {{modalOptions.buttonOk || 'applica'}}
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+        <div class="modal-dialog modal-dialog--small modal-dialog-centered modal-loader" role="document" style="margin-top: 40%;" ng-if="modalOptions.type == 'loader'">
+            <div class="modal-content" style="box-shadow: none; background: none; border: none;">
+                <div class="modal-body table-modal">
+                    <div class="loader-container loader-container--is-vertical" style="padding-bottom: 30px;" ng-hide="closeLoader.message">
+                        <div class="loader-container__gif"></div>
+                        <div class="loader-container__text">
+                            {{modalOptions.bodyText}}
+                        </div>
+                    </div>
+                    <!--<div class="container-boxes-providing" ng-if="closeLoader.message" ng-init="closeTimeOut(1500)">-->
+                    <div class="container-boxes-providing" ng-if="closeLoader.message" style="min-height: 90px;" ng-init="closeTimeOut(closeLoader.time || 1500)">
+                        <div class="nsa-box-providing" ng-if="closeLoader.code == 'OK'">
+                            <span class="icomoon icomoon-mark"></span>
+                            <span class="nsa-box-provinding__text">{{closeLoader.message}}</span>
+                        </div>
+                        <div class="nsa-box-providing" ng-if="closeLoader.code == 'KO'" style="min-height: 60px;" ng-init="closeTimeOut(closeLoader.time || 1500)">
+                            <span class="icomoon icomoon-mark icomoon-cross" style="color: #ff3636;"></span>
+                            <span class="nsa-box-provinding__text">{{closeLoader.message}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>

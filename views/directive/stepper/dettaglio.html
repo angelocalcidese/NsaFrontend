@@ -1,0 +1,91 @@
+<div  style="min-height: 480px;">
+    <div class="l-flex-between u-mb-15">
+            <div aria-label="breadcrumb" class="nsa-breadcrumb-container" >
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <a href="">{{stepNumber}}{{sottostepNumber}} {{formData.title}}</a>
+                    </li>
+                </ol>
+            </div>
+            <div class="nsa-datepicker" >
+                <label for="" class="nsa-datepicker__label">Data Competenza</label>
+               <input type="text" class="nsa-datepicker__input" placeholder="gg/mm/aaaa" ng-click="open1()" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Chiudi" alt-input-formats="altInputFormats" />
+
+            </div>
+        </div>
+
+        <div class="l-flex-between u-mb-15">
+            <span class="code-jump">Posizioni del provider contract <a href="#" class="nsa-link-14-500">12345678-004</a></span>
+
+            <button type="button" class="btn btn-outline-secondary more-pd-left" >
+                posizione
+                <span class="icomoon left icomoon-add"></span>
+            </button>
+        </div>
+
+
+
+        <table class="nsa-table nsa-table-orders">
+            <thead class="nsa-table__intestation ">
+            <tr>
+                <th ng-repeat="int in tableDetail"  class="nsa-table__intestation__item tw-10 " ng-class="int.key == 'id' ? 'nsa-table__intestation__item--has-background' : ''">
+                    {{int.value}}
+                </th>
+            </tr>
+            </thead>
+            <tbody class="nsa-table__content  nsa-table__content--has-border  ">
+            <tr dir-paginate="(datoindex, val) in valueDetail |  orderBy:sortKey:reverse | itemsPerPage:8 "
+                current-page="currentPage" pagination-id="detail">
+                <td class="nsa-table__content__item" ng-repeat="int in tableDetail" ng-class="int.key == 'id' ? ' nsa-table__content__item--has-background' : ''">
+                    <div class="wrap  " ng-if="int.key != 'action'">
+                        {{val[int.key]}}
+                    </div>
+                    <div class="wrap  " ng-if="int.key == 'action'">
+                        <div class="nsa-overflow-menu" >
+                            <div class="nsa-overflow-menu__header btn-group dropleft">
+                                <button type="button" class="nsa-overflow-menu__header__button" ng-click="modenabled(datoindex, tableDetail);" data-toggle="dropdown" aria-expanded="false" data-offset="20, 2">
+                                    <span class="icomoon icomoon-dots"></span>
+                                </button>
+                                <div class="nsa-overflow-menu__content dropdown-menu" ng-class="openMenu[datoindex] ? 'show' : ''">
+                                    <button class="nsa-overflow-menu__content__item dropdown-item" type="button" ng-click="openMenu[datoindex]=!openMenu[datoindex]" style="width: 100%;padding-bottom: 7px;">
+                                        Modifica
+                                    </button>
+                                    <button class="nsa-overflow-menu__content__item dropdown-item" type="button" ng-click="openMenu[datoindex]=!openMenu[datoindex]" style="width: 100%;padding-bottom: 7px;">
+                                        Elimina
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="11" class="nsa-table__content__item   nsa-table__content__item--has-colspan    ">
+                    <div class="wrap  ">
+                        Assegno a mezzo vaglia - Avviso di Ricevimento (Zona 1)
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <dir-pagination-controls
+                class="l-row-center u-mt-10"
+                boundary-links="true"
+                on-page-change="pageChangeHandler(newPageNumber)"
+                pagination-id="detail">
+        </dir-pagination-controls>
+        <div class="nsa-column__footer">
+            <button type="button" class="btn btn-outline-secondary" --skeleton="button-partial">
+                anomalie
+            </button>
+            <div class="l-flex-between u-w-30">
+                <a href="" class="nsa-button-link " title="Salva e chiudi" --skeleton="button-link-partial">
+                    <span class="nsa-link-14-500 nsa-link--has-underline">Salva e chiudi</span>
+                    <span class="icomoon icomoon-"></span>
+                </a>
+                <button type="button" class="btn btn-navigation " --skeleton="button-partial">
+                    crea distinta
+                </button>
+            </div>
+        </div>
+        </div>

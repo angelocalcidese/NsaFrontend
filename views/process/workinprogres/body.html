@@ -1,0 +1,108 @@
+    <h1 class="nsa-title-page u-mt-40">Ordini in lavorazione</h1>
+<div class="u-mt-15 u-pos-relative l-flex-center">
+    <div class="nav nsa-nav-tabs" --skeleton="tab">
+        <a href="" ng-click=" changeTab('ordersinline');" class="nsa-nav-tabs__item" ng-class="tabActive == 'ordersinline' ? 'active' : ''"data-target="#tab1" data-toggle="tab">
+            In coda ({{ordersinline.length}})
+        </a>
+        <a href="" ng-click="changeTab('ordinifinish');" class="nsa-nav-tabs__item" ng-class="tabActive == 'ordinifinish' ? 'active' : ''" data-target="#tab2" data-toggle="tab">
+            conclusi ({{ordinifinish.length}})
+        </a>
+        <a href="" ng-click="changeTab('ordiniblocked');" class="nsa-nav-tabs__item" ng-class="tabActive == 'ordiniblocked' ? 'active' : ''" data-target="#tab2" data-toggle="tab">
+            bloccati ({{ordiniblocked.length}})
+        </a>
+    </div>
+    <div class="u-pos-absolute pos-bl">
+        <a href="" class="nsa-button-link " title="Filtra per" >
+            <span class="nsa-link-14-500 nsa-link--has-underline">Filtra per</span>
+            <span class="icomoon icomoon-filter"></span>
+        </a>
+    </div>
+</div>
+    <div class="u-pos-absolute pos-bl">
+        <!--<button type="button" ng-if="tabActive == 'users' && controlProfile('PROFILE', 'C')" class="btn btn-outline-primary pull-right" ng-click="createUserModal()">-->
+        <!--Nuovo Utente-->
+        <!--</button>-->
+        <!--<button type="button" ng-if="tabActive == 'groups'&& controlProfile('PROFILE', 'C')" class="btn btn-outline-primary pull-right" ng-click="createGroupModal()">-->
+        <!--Nuovo Gruppo-->
+        <!--</button>-->
+        <!--<button type="button" ng-if="tabActive == 'units'&& controlProfile('PROFILE', 'C')" class="btn btn-outline-primary pull-right" ng-click="createUnitModal()">-->
+        <!--Nuova Unità Organizzativa-->
+        <!--</button>-->
+    </div>
+</div>
+<!--TABELLA ORDINI IN CODA-->
+<div ng-if="tabActive == 'ordersinline'">
+    <div class="d-flex row">
+        <div class="col-sm-4">
+            <div class="alert alert-success" ng-show="viewMessage=='OK'">
+                <div class="alert__content">
+                    {{messageResponse}}
+                </div>
+            </div>
+            <div class="alert alert-danger"  ng-show="viewMessage=='KO'">
+                <div class="alert__content">
+                    {{messageResponse}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <nsa-table
+            dati="ordersinline"
+            custom-header="headerTableOrdersInline"
+            tipologia="tipologia"
+            show-spinner="spinOn"
+            function-edit="editOrdersInline"
+            function-detail="detailOrdersInline"
+            search=false
+    ></nsa-table>
+</div>
+<!--TABELLA ORDINI CHIUSI-->
+<div ng-if="tabActive == 'ordinifinish'">
+    <div class="d-flex row">
+        <div class="col-sm-4">
+            <div class="alert alert-success" ng-show="viewMessage=='OK'">
+                <div class="alert__content">
+                    {{messageResponse}}
+                </div>
+            </div>
+            <div class="alert alert-danger"  ng-show="viewMessage=='KO'">
+                <div class="alert__content">
+                    {{messageResponse}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <nsa-table
+            dati="ordinifinish"
+            custom-header="headerTableOrdersFinish"
+            detail-views="modalFormOrdersFinish"
+            tipologia="tipologia"
+            show-spinner="spinOn4"
+            function-detail="detailOrdersFinish"
+    ></nsa-table>
+</div>
+<!--TABELLA ORDINI BLOCCATI-->
+<div ng-if="tabActive == 'ordiniblocked'">
+    <div class="d-flex row">
+        <div class="col-sm-4">
+            <div class="alert alert-success" ng-show="viewMessage=='OK'">
+                <div class="alert__content">
+                    {{messageResponse}}
+                </div>
+            </div>
+            <div class="alert alert-danger"  ng-show="viewMessage=='KO'">
+                <div class="alert__content">
+                    {{messageResponse}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <nsa-table
+            dati="ordiniblocked"
+            custom-header="headerTableOrdersBlocked"
+            detail-views="modalFormOrdersBlocked"
+            tipologia="tipologia"
+            show-spinner="spinOn2"
+            function-detail="detailOrdersBlocked"
+    ></nsa-table>
+</div>
