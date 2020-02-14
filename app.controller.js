@@ -41,10 +41,10 @@ nsaApp.controller('nsaController',
                 {'nome': 'dettaglio_ordine_uno', 'title':'Dettagli Ordine Figlio', 'model': 'dettaglio', 'description': '', 'data': {"pesatura":"1"}, 'utente': '', 'step': []},
                 {'nome': 'dettaglio_ordine_uno', 'title':'Dettagli Ordine Figlio', 'model': 'dettaglio', 'description': '', 'data': {"pesatura":"1"}, 'utente': '', 'step': []},
                 {'nome': 'dettaglio_ordine_uno', 'title':'Dettagli Ordine Figlio', 'model': 'dettaglio', 'description': '', 'data': {"pesatura":"1"}, 'utente': '', 'step': []},
-                {'nome': 'servizi_aggiuntivi','title':'Servizi Aggiuntivi', 'model': 'servizi', 'description': '', 'data': {}, 'utente': '', 'step': []}
+                {'nome': 'servizi_aggiuntivi','title':'Servizi Aggiuntivi', 'model': 'aggiuntivi', 'description': '', 'data': {"pesatura":"1"}, 'utente': '', 'step': []}
             ]},
-            {'nome': 'verifica_omologazione','title':'Verifica Omologazione', 'model': 'verifica','description': '', 'data': {}, 'utente': '', 'step': []},
-            {'nome': 'allestimento_fornitura','title':'Allestimento e Fornitura', 'model': 'finalizza', 'description': '', 'data': {}, 'utente': '', 'step': []},
+            {'nome': 'verifica_omologazione','title':'Verifica Omologazione', 'model': 'verifica','description': '', 'data': {"pesatura":"1"}, 'utente': '', 'step': []},
+            {'nome': 'allestimento_fornitura','title':'Allestimento e Fornitura', 'model': 'allestimento', 'description': '', 'data': {"pesatura":"1"}, 'utente': '', 'step': []},
             {'nome': 'finalizzazione','title':'Finalizzazione', 'model': 'finalizza', 'description': '', 'data': {}, 'utente': '', 'step': []}
         ]};
 

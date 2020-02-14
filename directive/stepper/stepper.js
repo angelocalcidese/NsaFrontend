@@ -39,6 +39,10 @@ nsaApp.controller('nsaStepperController', ['$scope','$log', 'modalService','uibD
                 return "views/directive/stepper/distinta.html";
             if ($scope.type === "dettaglio")
                 return "views/directive/stepper/dettaglio.html";
+            if ($scope.type === "aggiuntivi")
+                return "views/directive/stepper/aggiuntivi.html";
+            if ($scope.type === "allestimento")
+                return "views/directive/stepper/allestimento.html";
         };
 
 

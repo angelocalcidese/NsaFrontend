@@ -1,6 +1,7 @@
 nsaApp.controller('nsaTableController', ['$scope','$log', 'modalService',
     function ($scope, $log, modalService) {
     // Codice Tabella
+        $scope.disclaimer = false;
         $scope.form = {};
         $scope.currentPage = 1;
         $scope.sort = function(keyname){
