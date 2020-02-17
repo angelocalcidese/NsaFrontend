@@ -1,6 +1,16 @@
     <h1 class="nsa-title-page u-mt-40">Ordini in lavorazione</h1>
+    <!--<div class="">-->
+        <!--<button type="button" class="btn btn-outline-primary pull-right">-->
+            <!--Aggiorna-->
+        <!--</button>-->
+
+    <!--</div>-->
 <div class="u-mt-15 u-pos-relative l-flex-center">
-    <div class="nav nsa-nav-tabs" --skeleton="tab">
+    <div><button type="button" class="btn btn-outline-primary">
+        Aggiorna
+    </button>
+    </div>
+    <div class="nav nsa-nav-tabs">
         <a href="" ng-click=" changeTab('ordersinline');" class="nsa-nav-tabs__item" ng-class="tabActive == 'ordersinline' ? 'active' : ''"data-target="#tab1" data-toggle="tab">
             In coda ({{ordersinline.length}})
         </a>
@@ -12,7 +22,7 @@
         </a>
     </div>
     <div class="u-pos-absolute pos-bl">
-        <a href="" class="nsa-button-link " title="Filtra per" >
+        <a href="" class="nsa-button-link " title="Filtra per" ng-click="modalFilterProcess()">
             <span class="nsa-link-14-500 nsa-link--has-underline">Filtra per</span>
             <span class="icomoon icomoon-filter"></span>
         </a>

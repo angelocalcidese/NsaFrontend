@@ -28,9 +28,9 @@
     <div class="nsa-column nsa-column--main-large" ng-repeat="(indexstep, step) in dataStep.step" ng-if="stepCircle[indexstep]">
         <!--{{dataStep.step[indexstep]}}-->
         <!--STEP-->
-        <stepper-type ng-show="stepCircle[indexstep] && !stepCircle[indexstep].length" value-detail="tabledetail" table-detail="headerTableDetail" type="step.model" step-number="indexstep + 1 + '.'" form-data="dataStep.step[indexstep]"></stepper-type>
+        <stepper-type ng-show="stepCircle[indexstep] && !stepCircle[indexstep].length"  value-detail="tabledetail" modal-position="modalPosition" table-detail="headerTableDetail" type="step.model" step-number="indexstep + 1 + '.'" form-data="dataStep.step[indexstep]"></stepper-type>
         <!--SOTTO STEP-->
-        <stepper-type ng-repeat="(indexUnStep, ustep) in step.step" ng-show="stepCircle[indexstep][indexUnStep]" value-detail="tabledetail" table-detail="headerTableDetail" type="ustep.model" step-number="indexstep + 1 + '.'" sottostep-number="indexUnStep + 1" form-data="dataStep.step[indexstep].step[$index]"></stepper-type>
+        <stepper-type ng-repeat="(indexUnStep, ustep) in step.step" ng-show="stepCircle[indexstep][indexUnStep]" modal-position="modalPosition" value-detail="tabledetail" table-detail="headerTableDetail" type="ustep.model" step-number="indexstep + 1 + '.'" sottostep-number="indexUnStep + 1" form-data="dataStep.step[indexstep].step[$index]"></stepper-type>
 
     </div>
 

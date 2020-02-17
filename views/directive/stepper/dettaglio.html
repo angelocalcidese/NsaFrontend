@@ -18,7 +18,7 @@
         <div class="l-flex-between u-mb-15">
             <span class="code-jump">Posizioni del provider contract <a href="#" class="nsa-link-14-500">12345678-004</a></span>
 
-            <button type="button" class="btn btn-outline-secondary more-pd-left" >
+            <button type="button" class="btn btn-outline-secondary more-pd-left" ng-click="modalPosition()">
                 posizione
                 <span class="icomoon left icomoon-add"></span>
             </button>
@@ -34,9 +34,8 @@
                 </th>
             </tr>
             </thead>
-            <tbody class="nsa-table__content  nsa-table__content--has-border  ">
-            <tr dir-paginate="(datoindex, val) in valueDetail |  orderBy:sortKey:reverse | itemsPerPage:8 "
-                current-page="currentPage" pagination-id="detail">
+            <tbody class="nsa-table__content  nsa-table__content--has-border  " ng-repeat="(datoindex, val) in valueDetail |  orderBy:sortKey:reverse ">
+            <tr>
                 <td class="nsa-table__content__item" ng-repeat="int in tableDetail" ng-class="int.key == 'id' ? ' nsa-table__content__item--has-background' : ''">
                     <div class="wrap  " ng-if="int.key != 'action'">
                         {{val[int.key]}}
@@ -69,12 +68,6 @@
             </tr>
             </tbody>
         </table>
-        <dir-pagination-controls
-                class="l-row-center u-mt-10"
-                boundary-links="true"
-                on-page-change="pageChangeHandler(newPageNumber)"
-                pagination-id="detail">
-        </dir-pagination-controls>
     <button-step anomalie="12" text-avanti="Avanti" form-name="dettaglio"></button-step>
     </form>
         </div>

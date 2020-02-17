@@ -4,7 +4,7 @@ nsaApp.controller('workingprogres', ['$scope', '$rootScope', '$log', 'modalServi
 
         $scope.tipologia= "tabellaclassica";
         $scope.tabActive= "ordersinline";
-
+// INIZIO MOCK
         $scope.ordersinline = [
             {"id":42341,"bookingdate":"2019-01-05T09:05:05.035Z","bookingcode":"4102440","client":"Tim S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"50", "anomalies": "0"},
             {"id":2234342,"bookingdate":"2019-01-06T09:05:05.035Z","bookingcode":"1234567","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"60", "anomalies": "0"},
@@ -73,6 +73,30 @@ nsaApp.controller('workingprogres', ['$scope', '$rootScope', '$log', 'modalServi
                                             {"key": "edit", "value": "", "type": "eye", "title": "Dettaglio Ordine"},
                                             {"key": "edit", "value": "", "type": "detail", "title": "Dettaglio Ordine"}
                                         ];
+// FINE MOCK
+        $scope.modalFilterInput = [ {"model": "", "label": "TIPO", "type": "title"},
+            {"model": "directacept", "label": "Accettazione Diretta", "type": "checkbox"},
+            {"model": "bill", "label": "Bolletta", "type": "checkbox"},
+            {"model": "decentralization", "label": "Decentramento", "type": "checkboxend"},
+            {"model": "id", "label": "PRENOTAZIONE", "type":"text", "required":true, "disabledMod": true},
+            {"model": "client", "label": "CLIENTE", "type":"text", "required":true, "disabledMod": true},
+            {"model": "bookingcode", "label": "CONTO", "type":"text", "required":true, "disabledMod": true},
+            {"model": "product", "label": "PRODOTTO", "type":"option", "required":true, "disabledMod": true},
+            {"model": "workto", "label": "LAVORATO DA", "type":"option", "required":true, "disabledMod": true},
+            {"model": "state", "label": "STATO", "type":"option", "required":true, "disabledMod": true},
+            {"model": "anomalies", "label": "ANOMALIE", "type":"option", "required":true, "disabledMod": true},
+        ];
+        $scope.modalFilterProcess = function(){
+            modalService.showModal({}, {
+                headerText: "Filtra per",
+                contentType: "",
+                bodyText: "",
+                scope: $scope,
+                type: "insert",
+                input: $scope.modalFilterInput,
+                callbackFunction: ''
+            });
+        };
 
         $scope.changeTab = function(tab){
             $scope.tabActive = tab;

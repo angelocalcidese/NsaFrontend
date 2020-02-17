@@ -72,13 +72,13 @@
             <!-- INSERT -->
             <div class="modal-body" ng-if="modalOptions.type == 'insert'">
 
-                    <div class="row row-margin">
+                    <div class="row row--has-mb-25">
                         <input type="hidden" name="id" ng-if="modalOptions.data['id']" id="id" ng-model="formvalue.modalOptions.input['id']" ng-init="formvalue.modalOptions.input['id'] = modalOptions.data['id']" />
-                        <div class=" pad-input" ng-repeat="item in modalOptions.input"  ng-class="item.type == 'textarea' ? 'col-sm-12' : 'col-sm-6' ">
-                            <div class="nsa-input" ng-if="item.type != 'option' && item.type != 'textarea'">
-                            <label class="nsa-input__label " ng-if="item.type != 'textarea'" for="{{item.model}}" name="{{item.model}}">
+                        <div class=" pad-input" ng-repeat="item in modalOptions.input"  ng-class="item.type == 'textarea' || item.type == 'title' || item.type == 'checkboxend' ? 'col-sm-12' : 'col-sm-6' ">
+                            <div class="nsa-input" ng-if="item.type != 'option' && item.type != 'textarea'" ng-class="item.type == 'checkbox' || item.type == 'checkboxend' ? 'checkbox_custom' : ''">
+                            <label class="nsa-input__label " ng-if="item.type != 'textarea' && item.type != 'checkbox' && item.type != 'checkboxend'" for="{{item.model}}" name="{{item.model}}">
                                 {{item.label}}</label>
-                            <input ng-if="item.type == 'text'"
+                            <input ng-if="item.type == 'text' || item.type == 'weight'"
                                    type="input"
                                    class="nsa-input__input"
                                    maxlength="{{item.maxlength || 30}}"
@@ -89,6 +89,7 @@
                                    ng-required="item.required && !item.disabledMod"
                                    ng-disabled="modalOptions.data['id'] && item.disabledMod"
                                    placeholder="Inserisci" />
+                                <span ng-if="item.type == 'weight'" class="nsa-input__unity-container__unity gr">gr</span>
                             <input ng-if="item.type == 'email'"
                                    type="email"
                                    class="nsa-input__input"
@@ -101,7 +102,7 @@
                                    ng-disabled="modalOptions.data['id'] && item.disabledMod"
                                    placeholder="Inserisci @email" />
                                 <div class="modal-body__radio-section" ng-if="item.type == 'radiobutton2'">
-                                    <div class="nsa-radio col-sm-6" >
+                                    <div class="nsa-radio col-sm-4" >
                                 <input class="nsa-radio__input" type="radio" id="radio-1" ng-disabled="modalOptions.data['id'] && item.disabledMod" ng-click="formvalue.modalOptions.input[item.model] = true"  ng-checked="modalOptions.data[item.model] == true" value="true" name="radio-work-order">
                                 <label class="nsa-radio__label" for="radio-1">Si</label>
                                 </div>
@@ -110,6 +111,10 @@
                                 <label class="nsa-radio__label" for="radio-2" >No</label>
                                 </div>
                                     <input type="hidden" ng-model="formvalue.modalOptions.input[item.model]" ng-init="formvalue.modalOptions.input[item.model] = modalOptions.data[item.model]" ng-required="item.required" />
+                                </div>
+                                <div class="nsa-checkbox" ng-if="item.type == 'checkbox' || item.type == 'checkboxend'">
+                                    <input class="nsa-checkbox__input" type="checkbox" id="{{item.model}}" name="{{item.model}}"ng-model="formvalue.modalOptions.input[item.model]" aria-checked="false">
+                                    <label class="nsa-checkbox__label" for="{{item.model}}"> {{item.label}}</label>
                                 </div>
                             </div>
                             <div class="nsa-textarea__container form-group" ng-if="item.type == 'textarea'">
@@ -133,7 +138,7 @@
                                 <label for="{{item.model}}" class="nsa-dropdown__label">
                                     {{item.label}}
                                 </label>
-                                <input type="hidden" ng-model="formvalue.modalOptions.input[item.model]" id="{{item.model}}"/>
+                                <input type="hidden" ng-model="formvalue.modalOptions.input[item.model]" id="{{item.model}}" ng-required="item.required"/>
                                 <div class="ss-main nsa-dropdown__select"
                                      ng-init="formvalue.modalOptions.input[item.model] = modalOptions.data[item.model]">
                                     <div class="ss-single-selected" ng-click="item.open = !item.open" ng-init="item.open=false">

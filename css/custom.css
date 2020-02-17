@@ -1,5 +1,5 @@
 .nsa-table {height:auto;}
-.pad-input {padding:20px;}
+.pad-input {padding:8px;}
 .nsa-card__header__block .item__text{
     line-height: 2;
 }
@@ -77,4 +77,12 @@ button, input {
     top: 53%;
     padding-bottom: 1px;
     padding-top: 0;
+}
+.checkbox_custom {
+    height: 8px;
+}
+.gr {
+position: absolute;
+right: 6px;
+padding: 7px;
 }

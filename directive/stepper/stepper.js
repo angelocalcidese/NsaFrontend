@@ -1,16 +1,16 @@
 nsaApp.controller('nsaStepperController', ['$scope','$log', 'modalService','uibDateParser',
     function ($scope, $log, modalService, uibDateParser) {
         $scope.dateOptions = {
-            dateDisabled: disabled,
+            // dateDisabled: disabled,
             formatYear: 'yy',
-            maxDate: new Date(),
+            // maxDate: new Date(),
             startingDay: 1
         };
-        function disabled(data) {
-            var date = data.date,
-                mode = data.mode;
-            return mode === 'day' && date.getDay() >= new Date() ;
-        }
+        // function disabled(data) {
+        //     var date = data.date,
+        //         mode = data.mode;
+        //     return mode === 'day' && date.getDay() >= new Date() ;
+        // }
         $scope.open1 = function() {
             $scope.popup1.opened = true;
         };
@@ -56,7 +56,8 @@ nsaApp.controller('nsaStepperController', ['$scope','$log', 'modalService','uibD
             stepNumber: '=',
             sottostepNumber: '=',
             tableDetail: '=',
-            valueDetail: '='
+            valueDetail: '=',
+            modalPosition: '='
         },
         restrict: 'E',
         controller: 'nsaStepperController'
