@@ -82,7 +82,45 @@ button, input {
     height: 8px;
 }
 .gr {
-position: absolute;
-right: 6px;
-padding: 7px;
+    position: absolute;
+    right: 6px;
+    padding: 7px;
+}
+.button-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.header-hidden {
+    height: 45px;
+    transition: height 1s;
+}
+.button-hidden{
+    display: none;
+    transition-delay: 1s;
+}
+.button-top {
+    z-index:999;
+}
+.nsa-header--has-box-search {
+    transition: height 1s;
+}
+.header-hidden .nsa-box-search-hidden{
+    display:none;
+    transition-delay: 2s;
+}
+.arrow-top-header {
+    width: 500px;
+    position: absolute;
+    top: 74px;
+    text-align: center;
+    left: 30%;
+    cursor:pointer;
+    transition-delay: 2s;
+}
+.nsa-table:after {
+    height: 512px;
+}
+.card-order-information-container {
+    height: 512px;
 }

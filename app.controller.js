@@ -38,9 +38,6 @@ nsaApp.controller('nsaController',
             {'nome': 'creazione_distinta', 'title':'Creazione distinta', 'model': 'distinta', 'description': '', 'data': {"primocodice":"OGG12345678012345678"}, 'utente': '', 'step': []},
             {'nome': 'dettaglio_ordine', 'title':'Dettaglio Ordine', 'model': 'dettaglio', 'description': '', 'data': {"pesatura":"1"}, 'utente': '', 'step': [
                 {'nome': 'dettaglio_ordine_uno', 'title':'Dettagli Ordine Figlio', 'model': 'dettaglio', 'description': '', 'data': {"pesatura":"1"}, 'utente': '', 'step': []},
-                {'nome': 'dettaglio_ordine_uno', 'title':'Dettagli Ordine Figlio', 'model': 'dettaglio', 'description': '', 'data': {"pesatura":"1"}, 'utente': '', 'step': []},
-                {'nome': 'dettaglio_ordine_uno', 'title':'Dettagli Ordine Figlio', 'model': 'dettaglio', 'description': '', 'data': {"pesatura":"1"}, 'utente': '', 'step': []},
-                {'nome': 'dettaglio_ordine_uno', 'title':'Dettagli Ordine Figlio', 'model': 'dettaglio', 'description': '', 'data': {"pesatura":"1"}, 'utente': '', 'step': []},
                 {'nome': 'servizi_aggiuntivi','title':'Servizi Aggiuntivi', 'model': 'aggiuntivi', 'description': '', 'data': {"pesatura":"1"}, 'utente': '', 'step': []}
             ]},
             {'nome': 'verifica_omologazione','title':'Verifica Omologazione', 'model': 'verifica','description': '', 'data': {"pesatura":"1"}, 'utente': '', 'step': []},
@@ -123,7 +120,7 @@ nsaApp.controller('nsaController',
 
             RestService.setdefault(app, type, element, username, code)
                 .then(function(response){
-                $log.info('Default: ' + response.description);
+                    $log.info('Default: ' + response.description);
                 })
                 .catch(function(error){
                     $log.info('Default: ' + error.description);
@@ -132,7 +129,7 @@ nsaApp.controller('nsaController',
 
         $scope.choosedRole = function(role){
             // $log.info(role);
-
+            $scope.stepperView = false;
             $scope.loaderModal();
              // var choosed = $filter('filter')($scope.rolesList, {'name':role.name});
             if(role.default){

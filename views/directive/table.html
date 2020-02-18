@@ -99,7 +99,7 @@
         </tr>
         </thead>
         <tbody class="nsa-table__content" ng-show="dati.length > 0">
-        <tr dir-paginate="(datoindex, dato) in dati | filter: searchElement | orderBy:sortKey:reverse | itemsPerPage:8 "
+        <tr dir-paginate="(datoindex, dato) in dati | filter: searchElement | orderBy:sortKey:reverse | itemsPerPage:10 "
             current-page="currentPage" pagination-id="tableName">
             <td class="nsa-table__content__item"
                 ng-repeat="item in customHeader"

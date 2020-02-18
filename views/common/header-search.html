@@ -1,6 +1,11 @@
-<header class="nsa-header nsa-header--has-box-search" --skeleton="header-partial">
-    <div class="nsa-box-search" --skeleton="box-search-partial">
-        <div class="form-group nsa-search">
+<header class="nsa-header " ng-class="viewHeader ? 'nsa-header--has-box-search' : 'header-hidden'" >
+    <div class="u-mr-15 " ng-class="viewHeader ? 'button-hidden' : 'button-top'">
+        <button type="button" class="btn btn-primary" ng-click="viewHeader=!viewHeader">
+            Crea un nuovo ordine
+        </button>
+    </div>
+    <div class="" ng-class="viewHeader ? 'nsa-box-search' : 'nsa-box-search-hidden'" >
+        <div class="form-group nsa-search" >
             <label for="search" class="nsa-search__label">Crea un nuovo ordine:</label>
             <div id="js-nsa-search" class="nsa-search__container-input">
                 <input id="search" type="text" class="form-control nsa-search__input" placeholder="Inserendo un Codice speditore o un Provider Contract/Conto Contrattuale" autocomplete="off">
@@ -16,11 +21,13 @@
                 </div>
             </div>
             <div class="input-group-append nsa-search__button">
-                <button id="nsa-search-button" type="button" class="btn btn-outline-primary is-circle" disabled="" --skeleton="button-partial"></button>
+                <button id="nsa-search-button" type="button" class="btn btn-outline-primary is-circle" disabled="" ></button>
             </div>
         </div>
+        <span class="glyphicon glyphicon-chevron-up arrow-top-header" aria-hidden="true" ng-click="viewHeader=!viewHeader"></span>
     </div>
 
     <div class="nsa-header__mask"></div>
     <div class="nsa-header__mask--bg"></div>
+
 </header>

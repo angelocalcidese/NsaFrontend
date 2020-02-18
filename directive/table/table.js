@@ -1,5 +1,8 @@
 nsaApp.controller('nsaTableController', ['$scope','$log', 'modalService',
     function ($scope, $log, modalService) {
+        $scope.pageChangeHandler = function(newpage){
+            $log.info('Nuova pagina:' + newpage);
+        };
     // Codice Tabella
         $scope.disclaimer = false;
         $scope.form = {};

@@ -142,7 +142,7 @@
                                 <div class="ss-main nsa-dropdown__select"
                                      ng-init="formvalue.modalOptions.input[item.model] = modalOptions.data[item.model]">
                                     <div class="ss-single-selected" ng-click="item.open = !item.open" ng-init="item.open=false">
-                                        <span class="placeholder" ng-if="(!modalOptions.data[item.model] && !formvalue.modalOptions.input[item.model]) || formvalue.modalOptions.input[item.model] == ''">seleziona tipo</span>
+                                        <span class="placeholder" ng-if="(!modalOptions.data[item.model] && !formvalue.modalOptions.input[item.model]) || formvalue.modalOptions.input[item.model] == ''">seleziona</span>
                                         <span class="placeholder" ng-if="(modalOptions.data[item.model] || formvalue.modalOptions.input[item.model]) && formvalue.modalOptions.input[item.model] != ''"
                                               ng-repeat="val in item.option | filter:{entityId:formvalue.modalOptions.input[item.model]}"
                                                 ng-show="$index<1">
@@ -160,7 +160,7 @@
                                         <div class="ss-list ">
                                             <div class="ss-option"
                                                  ng-click="formvalue.modalOptions.input[item.model] = ''; item.open = !item.open;"
-                                            >seleziona tipo</div>
+                                            >seleziona</div>
                                             <div class="ss-option"
                                                  ng-repeat="opt in item.option"
                                                  ng-show="opt.entityId != modalOptions.data['id']"
