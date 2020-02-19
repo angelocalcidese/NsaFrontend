@@ -1,4 +1,4 @@
-<header class="nsa-header " ng-class="viewHeader ? 'nsa-header--has-box-search' : 'header-hidden'" >
+<form name="creaordine"><header class="nsa-header " ng-class="viewHeader ? 'nsa-header--has-box-search' : 'header-hidden'" >
     <div class="u-mr-15 " ng-class="viewHeader ? 'button-hidden' : 'button-top'">
         <button type="button" class="btn btn-primary" ng-click="viewHeader=!viewHeader">
             Crea un nuovo ordine
@@ -8,8 +8,8 @@
         <div class="form-group nsa-search" >
             <label for="search" class="nsa-search__label">Crea un nuovo ordine:</label>
             <div id="js-nsa-search" class="nsa-search__container-input">
-                <input id="search" type="text" class="form-control nsa-search__input" placeholder="Inserendo un Codice speditore o un Provider Contract/Conto Contrattuale" autocomplete="off">
-                <div id="js-nsa-search-list" class="nsa-search-list">
+                <input id="search" name="search" ng-model="searchOrder" type="text" class="form-control nsa-search__input" placeholder="Inserendo un Codice speditore o un Provider Contract/Conto Contrattuale" autocomplete="off" required>
+                <div id="js-nsa-search-list" class="nsa-search-list" ng-class="orderTrue ? 'is-display' : ''">
                     <span class="nsa-search-list__category">cliente</span>
                     <span class="nsa-search-list__option">123456789</span>
                     <span class="nsa-search-list__category">Provider contract/conto contrattuale</span>
@@ -21,7 +21,9 @@
                 </div>
             </div>
             <div class="input-group-append nsa-search__button">
-                <button id="nsa-search-button" type="button" class="btn btn-outline-primary is-circle" disabled="" ></button>
+                <button id="nsa-search-button" type="button" class="btn btn-outline-primary is-circle" ng-click="orderTrue=!orderTrue" ng-disabled="creaordine.$invalid">
+                    <span class="icomoon icomoon-magnifying-glass"></span>
+                </button>
             </div>
         </div>
         <span class="glyphicon glyphicon-chevron-up arrow-top-header" aria-hidden="true" ng-click="viewHeader=!viewHeader"></span>
@@ -31,3 +33,4 @@
     <div class="nsa-header__mask--bg"></div>
 
 </header>
+</form>

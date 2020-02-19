@@ -15,6 +15,7 @@ nsaApp.controller('nsaController',
         'RestService',
         '$filter',
         'modalService',
+        'RestServiceProcess',
     function ($scope,
               $rootScope,
               $location,
@@ -27,7 +28,8 @@ nsaApp.controller('nsaController',
               $log,
               RestService,
               $filter,
-              modalService
+              modalService,
+              RestServiceProcess
               ) {
 
         /**
@@ -48,6 +50,7 @@ nsaApp.controller('nsaController',
         $scope.application = "NSA";
         $scope.sender ="";
         $scope.stepperView = false;
+        $scope.searchOrder = "";
         // $scope.utente = "";
         var permessiPage =[{'dad': 'PROFILE', 'pageName' :'elencouser', 'homepage': true},
                            {'dad': 'PROFILE', 'pageName' :'detailuser'},

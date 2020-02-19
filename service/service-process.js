@@ -1,8 +1,5 @@
-nsaApp
-    .service('RestServiceProcess', ['$http',
-        function ($http) {
-            var url = "http://localhost:8090/Nsa/";
-            var app = "NSA";
+nsaApp.service('RestServiceProcess', ['$http','BASEPATH', 'APP',
+    function ($http, BASEPATH, APP) {
 
             return {
 

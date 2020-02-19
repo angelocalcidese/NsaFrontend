@@ -1,235 +1,233 @@
 nsaApp
-    .service('RestService', ['$http',
-    function ($http) {
-        var url = "http://localhost:8090/Nsa/";
-         var app = "NSA";
+    .service('RestService', ['$http','BASEPATH', 'APP',
+    function ($http, BASEPATH, APP) {
         var _allusers = function () {
-            return $http.get(url + 'users/all?application=' + app);
+            return $http.get(BASEPATH + 'users/all?application=' + APP);
         };
         var _totalusers = function () {
-            return $http.get(url + 'users/total');
+            return $http.get(BASEPATH + 'users/total');
         };
         var _allgroups = function () {
-            return $http.get(url + 'groups/all?application=' + app);
+            return $http.get(BASEPATH + 'groups/all?application=' + APP);
         };
         var _allroles = function () {
-            return $http.get(url + 'roles/all?application=' + app);
+            return $http.get(BASEPATH + 'roles/all?application=' + APP);
         };
         var _allunits = function () {
-            return $http.get(url + 'organizationunit/all?application=' + app);
+            return $http.get(BASEPATH + 'organizationunit/all?application=' + APP);
         };
         var _allapps = function () {
-            return $http.get(url + 'application/all');
+            return $http.get(BASEPATH + 'application/all');
         };
         var _createuser = function (myparams) {
             var params ={
                 "user": myparams
             };
-            return $http.post(url + 'users/new/', params);
+            return $http.post(BASEPATH + 'users/new/', params);
         };
         var _createuserapp = function (myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "user": myparams
             };
-            return $http.post(url + 'users/application/new/', params);
+            return $http.post(BASEPATH + 'users/application/new/', params);
         };
         var _userdetails = function (username) {
-            return $http.get(url + 'users/details/?application=' + app + '&username=' + username);
+            return $http.get(BASEPATH + 'users/details/?application=' + APP + '&username=' + username);
         };
         var _userprofile = function (username, appsearch) {
-            return $http.get(url + 'users/profile/?application=' + appsearch + '&username=' + username);
+            return $http.get(BASEPATH + 'users/profile/?application=' + appsearch + '&username=' + username);
         };
         var _updateuser = function (myparams) {
             var params ={
                 "user": myparams
             };
-            return $http.post(url + 'users/update/', params);
+            return $http.post(BASEPATH + 'users/update/', params);
         };
         var _updateuserapp = function (myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "user": myparams
             };
-            return $http.post(url + 'users/application/update/', params);
+            return $http.post(BASEPATH + 'users/application/update/', params);
         };
         var _enableuser = function(username){
-            return $http.get(url + 'users/application/enable/?application=' + app + '&username=' + username);
+            return $http.get(BASEPATH + 'users/application/enable/?application=' + APP + '&username=' + username);
         };
         var _creategroup = function (myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "group": myparams
             };
-            return $http.post(url + 'groups/new/', params);
+            return $http.post(BASEPATH + 'groups/new/', params);
         };
         var _createunit = function (myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "organizationUnit": myparams
             };
-            return $http.post(url + 'organizationunit/new/', params);
+            return $http.post(BASEPATH + 'organizationunit/new/', params);
         };
         var _createapp = function (myparams) {
             var params ={
                 "application": myparams
             };
-            return $http.post(url + 'application/new/', params);
+            return $http.post(BASEPATH + 'application/new/', params);
         };
         var _updategroup = function (myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "group": myparams
             };
-            return $http.post(url + 'groups/update/', params);
+            return $http.post(BASEPATH + 'groups/update/', params);
         };
         var _updateapp = function (myparams) {
             var params ={
                 "application": myparams
             };
-            return $http.post(url + 'application/update/', params);
+            return $http.post(BASEPATH + 'application/update/', params);
         };
         var _updateunit = function (myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "organizationUnit": myparams
             };
-            return $http.post(url + 'organizationunit/update/', params);
+            return $http.post(BASEPATH + 'organizationunit/update/', params);
         };
         var _unsetgroupuser = function (name, myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "name": name,
                 "users": myparams
             };
-            return $http.post(url + 'groups/users/unset', params);
+            return $http.post(BASEPATH + 'groups/users/unset', params);
         };
         var _setgroupuser = function (name, myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "name": name,
                 "users": myparams
             };
-            return $http.post(url + 'groups/users/set', params);
+            return $http.post(BASEPATH + 'groups/users/set', params);
         };
         var _setappuser = function (name, myparams) {
             var params ={
                 "application": name,
                 "users": myparams
             };
-            return $http.post(url + 'application/users/set', params);
+            return $http.post(BASEPATH + 'application/users/set', params);
         };
         var _unsetappuser = function (name, myparams) {
             var params ={
                 "application": name,
                 "users": myparams
             };
-            return $http.post(url + 'application/users/unset', params);
+            return $http.post(BASEPATH + 'application/users/unset', params);
         };
         var _unsetunituser = function (id, myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "name": id,
                 "users": myparams
             };
-            return $http.post(url + 'organizationunit/users/unset', params);
+            return $http.post(BASEPATH + 'organizationunit/users/unset', params);
         };
         var _setunituser = function (id, myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "name": id,
                 "users": myparams
             };
-            return $http.post(url + 'organizationunit/users/set', params);
+            return $http.post(BASEPATH + 'organizationunit/users/set', params);
         };
         var _replacegroupusers = function (name, myparams) {
-            return $http.post(url + 'groups/users/replace?application=' + app + '&name=' + name, myparams);
+            return $http.post(BASEPATH + 'groups/users/replace?application=' + APP + '&name=' + name, myparams);
         };
         var _groupmembers = function (group) {
-            return $http.get(url + 'groups/members/?application=' + app + '&name=' + group);
+            return $http.get(BASEPATH + 'groups/members/?application=' + APP + '&name=' + group);
         };
         var _groupdetails = function (group) {
-            return $http.get(url + 'groups/details/?application=' + app + '&name=' + group);
+            return $http.get(BASEPATH + 'groups/details/?application=' + APP + '&name=' + group);
         };
         var _unitdetails = function (unit) {
-            return $http.get(url + 'organizationunit/details/?application=' + app + '&id=' + unit);
+            return $http.get(BASEPATH + 'organizationunit/details/?application=' + APP + '&id=' + unit);
         };
         var _roledetails = function (role) {
-            return $http.get(url + 'roles/details/?application=' + app + '&name=' + role);
+            return $http.get(BASEPATH + 'roles/details/?application=' + APP + '&name=' + role);
         };
         var _appdetails = function (name) {
-            return $http.get(url + 'application/details?name=' + name);
+            return $http.get(BASEPATH + 'application/details?name=' + name);
         };
         var _rolemembers = function (role) {
-            return $http.get(url + 'roles/members/?application=' + app + '&name=' + role);
+            return $http.get(BASEPATH + 'roles/members/?application=' + APP + '&name=' + role);
         };
         var _unsetroleuser = function (name, myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "name": name,
                 "roles": myparams
             };
-            return $http.post(url + 'users/roles/unset', params);
+            return $http.post(BASEPATH + 'users/roles/unset', params);
         };
         var _setroleuser = function (name, myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "name": name,
                 "roles": myparams
             };
-            return $http.post(url + 'users/roles/set', params);
+            return $http.post(BASEPATH + 'users/roles/set', params);
         };
         var _setusersrole = function (name, myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "name": name,
                 "users": myparams
             };
-            return $http.post(url + 'roles/users/set', params);
+            return $http.post(BASEPATH + 'roles/users/set', params);
         };
         var _unsetusersrole = function (name, myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "name": name,
                 "users": myparams
             };
-            return $http.post(url + 'roles/users/unset', params);
+            return $http.post(BASEPATH + 'roles/users/unset', params);
         };
         var _unsetrolegroup = function (name, myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "name": name,
                 "roles": myparams
             };
-            return $http.post(url + 'groups/roles/unset', params);
+            return $http.post(BASEPATH + 'groups/roles/unset', params);
         };
         var _setrolegroup = function (name, myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "name": name,
                 "roles": myparams
             };
-            return $http.post(url + 'groups/roles/set', params);
+            return $http.post(BASEPATH + 'groups/roles/set', params);
         };
         var _dropdowngroups = function () {
-            return $http.get(url + 'groups/dropdown/?application=' + app);
+            return $http.get(BASEPATH + 'groups/dropdown/?application=' + APP);
         };
         var _dropdownunits = function () {
-            return $http.get(url + 'organizationunit/dropdown/?application=' + app);
+            return $http.get(BASEPATH + 'organizationunit/dropdown/?application=' + APP);
         };
         var _createrole = function (myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "role": myparams
             };
-            return $http.post(url + 'roles/new/', params);
+            return $http.post(BASEPATH + 'roles/new/', params);
         };
         var _updaterole = function (myparams) {
             var params ={
-                "application": app,
+                "application": APP,
                 "role": myparams
             };
-            return $http.post(url + 'roles/update/', params);
+            return $http.post(BASEPATH + 'roles/update/', params);
         };
         var _setdefault = function (appSend, type, element, username, code) {
             var params ={
@@ -243,7 +241,7 @@ nsaApp
             } else if(type === 'role'){
                 params.role = element;
             }
-            return $http.post(url + 'application/user/default/set', params);
+            return $http.post(BASEPATH + 'application/user/default/set', params);
         };
         return {
             allusers:_allusers,
