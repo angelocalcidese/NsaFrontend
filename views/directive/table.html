@@ -14,10 +14,10 @@
             <div class="card-order-information-container__header">
                 <div class="card-order-information-container__header__title">
                               <span class="card-order-information-container__header__title__order-information-number">
-                               {{detail.id}}
+                               {{detail.idCliente}}
                               </span>
                     <span class="card-order-information-container__header__title__client">
-                               {{detail.client}}
+                               {{detail.nomeCliente}}
                               </span>
                 </div>
                 <button class="card-order-information-container__header__close-button" id="js-close-order-information">
@@ -33,42 +33,42 @@
 
                     <div class="card-order-information-container__body__information-box__line">
                         <span class="card-order-information-container__body__information-box__title">Offerta commerciale</span>
-                        <span class="card-order-information-container__body__information-box__value">-</span>
+                        <span class="card-order-information-container__body__information-box__value">{{detail.contoFatturazione}}</span>
                     </div>
 
                     <div class="card-order-information-container__body__information-box__line">
                         <span class="card-order-information-container__body__information-box__title">Forma contrattuale</span>
-                        <span class="card-order-information-container__body__information-box__value">Conto proprio</span>
+                        <span class="card-order-information-container__body__information-box__value">{{}}</span>
                     </div>
 
                     <div class="card-order-information-container__body__information-box__line">
                         <span class="card-order-information-container__body__information-box__title">Modalità di pagamento</span>
-                        <span class="card-order-information-container__body__information-box__value">-</span>
+                        <span class="card-order-information-container__body__information-box__value">{{detail.descModalitaPagamento}}</span>
                     </div>
 
                     <div class="card-order-information-container__body__information-box__line">
                         <span class="card-order-information-container__body__information-box__title">Saldo</span>
-                        <span class="card-order-information-container__body__information-box__value">0 €</span>
+                        <span class="card-order-information-container__body__information-box__value">{{detail.saldoContabile}} €</span>
                     </div>
                 </div>
 
                 <div class="nsa-card-delivery nsa-card-delivery--has-shadow" >
                     <div class="nsa-content nsa-content--bigger">
                         <div class="nsa-content__container-title">
-                            <p class="nsa-content__container-title__title">{{}}</p>
+                            <p class="nsa-content__container-title__title">{{detail.prodotto}}</p>
                             <span class="icomoon icomoon-acceptance-approved"></span>
                         </div>
                         <div class="nsa-content__info">
                             <span class="icomoon icomoon-reservations"></span>
                             <p class="nsa-content__info__text nsa-content__info__text--single">
                                 Prenotazione:
-                                <span class="nsa-content__info__text--info">n° {{detail.bookingcode}} - {{detail.bookingdate |  date : "dd/MM/yy HH:mm"}}</span>
+                                <span class="nsa-content__info__text--info">n° {{detail.idPrenotazione}} - {{detail.dataAccettazione}}</span>
                             </p>
                         </div>
                         <div class="nsa-content__total-pieces">
                             <span class="icomoon icomoon-chunks"></span>
                             <p class="nsa-content__total-pieces__text">
-                                Pezzi tot.: <span class="nsa-content__total-pieces__text--info">-</span>
+                                Pezzi tot.: <span class="nsa-content__total-pieces__text--info">{{detail.numPezzi}}</span>
                             </p>
                         </div>
                         <div class="nsa-content__supply">
@@ -106,7 +106,12 @@
                 ng-class="{'nsa-table__content__item--is-last': item.type=='detail'}"
             >
                 <div class="wrap" ng-if="item.type=='id'"><span class="icomoon icomoon-user icomoon--lg"></span></div>
-                <div class="wrap" ng-if="item.type=='ordid'"><span class="icomoon icomoon-acceptance-approved icomoon--lg"></span></div>
+                <div class="wrap" ng-if="item.type=='ordid'">
+                    <span ng-if="dato[item.key] == 'AD'" class="icomoon icomoon-acceptance-approved icomoon--lg"></span>
+                    <span ng-if="dato[item.key] == 'PE'" class="icomoon icomoon-acceptance-approved icomoon--lg"></span>
+                    <span ng-if="dato[item.key] == 'B'"class="icomoon icomoon-acceptance-briefcase icomoon--lg"></span>
+                    <span ng-if="dato[item.key] == 'DEC'" class="icomoon-acceptance-parcel icomoon--lg"></span>
+                </div>
                 <div class="wrap" ng-if="item.type=='text'">{{dato[item.key]}}</div>
                 <div class="wrap" ng-if="item.type=='date'">{{dato[item.key] | date : "dd/MM/yy"}}</div>
                 <div class="wrap" ng-if="item.type=='paring' && dato[item.key] > 0"

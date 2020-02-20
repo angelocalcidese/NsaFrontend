@@ -1,18 +1,18 @@
     <h1 class="nsa-title-page u-mt-20">Ordini in lavorazione</h1>
 <div class="u-mt-15 u-pos-relative l-flex-center">
-    <div><button type="button" class="btn btn-outline-secondary  button-left">
+    <div><button type="button" class="btn btn-outline-secondary  button-left" ng-click="listWorkingProgress()">
         Aggiorna
     </button>
     </div>
     <div class="nav nsa-nav-tabs">
-        <a href="" ng-click=" changeTab('ordersinline');" class="nsa-nav-tabs__item" ng-class="tabActive == 'ordersinline' ? 'active' : ''"data-target="#tab1" data-toggle="tab">
-            In coda ({{ordersinline.length}})
+        <a href="" ng-click=" changeTab('ordersinline');" class="nsa-nav-tabs__item" ng-class="tabActive == 'ordersinline' ? 'active' : ''"  data-target="#tab1" data-toggle="tab">
+            In coda ({{righeTotalOrdersInLine}})
         </a>
         <a href="" ng-click="changeTab('ordinifinish');" class="nsa-nav-tabs__item" ng-class="tabActive == 'ordinifinish' ? 'active' : ''" data-target="#tab2" data-toggle="tab">
-            conclusi ({{ordinifinish.length}})
+            conclusi ({{righeTotalOrdersCompleted}})
         </a>
         <a href="" ng-click="changeTab('ordiniblocked');" class="nsa-nav-tabs__item" ng-class="tabActive == 'ordiniblocked' ? 'active' : ''" data-target="#tab2" data-toggle="tab">
-            bloccati ({{ordiniblocked.length}})
+            bloccati ({{righeTotalOrdersBlocked}})
         </a>
     </div>
     <div class="u-pos-absolute pos-bl">
@@ -49,6 +49,8 @@
             function-edit="editOrdersInline"
             function-detail="detailOrdersInline"
             search=false
+            number-items="righeTotalOrdersInLine"
+            call-element="listWorkingProgress"
     ></nsa-table>
 </div>
 <!--TABELLA ORDINI CHIUSI-->
@@ -67,13 +69,24 @@
             </div>
         </div>
     </div>
+    <!--<nsa-table-->
+            <!--dati="ordinifinish"-->
+            <!--custom-header="headerTableOrdersFinish"-->
+            <!--detail-views="modalFormOrdersFinish"-->
+            <!--tipologia="tipologia"-->
+            <!--show-spinner="spinOn4"-->
+            <!--function-detail="detailOrdersFinish"-->
+    <!--&gt;</nsa-table>-->
     <nsa-table
             dati="ordinifinish"
             custom-header="headerTableOrdersFinish"
-            detail-views="modalFormOrdersFinish"
             tipologia="tipologia"
-            show-spinner="spinOn4"
-            function-detail="detailOrdersFinish"
+            show-spinner="spinOn"
+            function-edit=""
+            function-detail="detailOrdersInline"
+            search=false
+            number-items="righeTotalOrdersCompleted"
+            call-element="listWorkingProgress"
     ></nsa-table>
 </div>
 <!--TABELLA ORDINI BLOCCATI-->
@@ -92,12 +105,23 @@
             </div>
         </div>
     </div>
+    <!--<nsa-table-->
+            <!--dati="ordiniblocked"-->
+            <!--custom-header="headerTableOrdersBlocked"-->
+            <!--detail-views="modalFormOrdersBlocked"-->
+            <!--tipologia="tipologia"-->
+            <!--show-spinner="spinOn2"-->
+            <!--function-detail="detailOrdersBlocked"-->
+    <!--&gt;</nsa-table>-->
     <nsa-table
             dati="ordiniblocked"
             custom-header="headerTableOrdersBlocked"
-            detail-views="modalFormOrdersBlocked"
             tipologia="tipologia"
-            show-spinner="spinOn2"
+            show-spinner="spinOn"
+            function-edit=""
             function-detail="detailOrdersBlocked"
+            search=false
+            number-items="righeTotalOrdersBlocked"
+            call-element="listWorkingProgress"
     ></nsa-table>
 </div>

@@ -1,75 +1,130 @@
-nsaApp.controller('workingprogres', ['$scope', '$rootScope', '$log', 'modalService', 'RestService', '$state',
-    function ($scope, $rootScope, $log, modalService, RestService, $state) {
+nsaApp.controller('workingprogres', ['$scope', '$rootScope', '$log', 'modalService', 'RestServiceProcess', '$state',
+    function ($scope, $rootScope, $log, modalService, RestServiceProcess, $state) {
         $scope.controlloUtente('workingprogres');
 
         $scope.tipologia= "tabellaclassica";
         $scope.tabActive= "ordersinline";
+
+        $scope.listWorkingProgress = function(elementView, start, finish, dateFilter, giorni, wday){
+            $scope.loaderModal();
+            if(!start) start = 1;
+            if(!finish) finish = 100;
+            var user = $scope.operatore.user.username;
+            var cmp = $scope.operatore.user.zona;
+            $log.info(start + '\n' + finish);
+            RestServiceProcess.tailMachining(dateFilter, cmp, giorni, wday, start, finish, user)
+                .then(function(response){
+                    if(elementView){
+                        $scope.ordersinline = elementView;
+                        var b = 0;
+                        var startNewPage = start - 1;
+                        for(var a=startNewPage; a < finish; a++){
+                            $scope.ordersinline[a] = response.data.lavorazioni.righe[b];
+                            b++;
+                        }
+                        $log.info($scope.ordersinline);
+                    } else {
+                        $scope.ordersinline = response.data.lavorazioni.righe;
+                        $scope.ordinifinish = response.data.lavorazioni.righe;
+                        $scope.ordiniblocked = response.data.lavorazioni.righe;
+
+
+                        $scope.righeTotalOrdersInLine = response.data.lavorazioni.righeTotaliCoda;
+                        $scope.righeTotalOrdersCompleted = response.data.lavorazioni.righeTotaliConcluse;
+                        $scope.righeTotalOrdersBlocked = response.data.lavorazioni.righeTotaliBloccate;
+                    }
+                    $scope.loaderModal('OK', 'Elementi caricati', 1);
+                })
+                .catch(function(error){
+                    $scope.loaderModal('KO', error.description);
+                });
+        };
+        if($scope.operatore && $scope.operatore.user && $scope.operatore.user.zona){
+            $scope.ordersinline = $scope.ordinifinish = $scope.ordiniblocked = '';
+            $scope.righeTotalOrdersInLine = $scope.righeTotalOrdersCompleted = $scope.righeTotalOrdersBlocked = '';
+
+            $scope.listWorkingProgress();
+        } else {
+            $scope.loaderModal();
+            $scope.loaderModal('KO', 'Errore: Utente sprovvisto di CMP');
+        }
+
+        $scope.$watch("operatore.user.zona", function(newValue) {
+            if(newValue){
+                $scope.listWorkingProgress();
+            }
+        });
 // INIZIO MOCK
-        $scope.ordersinline = [
-            {"id":42341,"bookingdate":"2019-01-05T09:05:05.035Z","bookingcode":"4102440","client":"Tim S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"50", "anomalies": "0"},
-            {"id":2234342,"bookingdate":"2019-01-06T09:05:05.035Z","bookingcode":"1234567","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"60", "anomalies": "0"},
-            {"id":323434,"bookingdate":"2019-01-05T09:05:05.035Z","bookingcode":"3453525","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"20", "anomalies": "0"},
-            {"id":4234423,"bookingdate":"2019-01-07T09:05:05.035Z","bookingcode":"5464564","client":"Vodafone S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"90", "anomalies": "0"},
-            {"id":5234234,"bookingdate":"2019-01-08T09:05:05.035Z","bookingcode":"4102440","client":"Tim S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"50", "anomalies": "0"},
-            {"id":2342344,"bookingdate":"2019-01-06T09:05:05.035Z","bookingcode":"1234567","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"60", "anomalies": "0"},
-            {"id":4234234,"bookingdate":"2019-01-07T09:05:05.035Z","bookingcode":"3453525","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"20", "anomalies": "0"},
-            {"id":4423423,"bookingdate":"2019-01-04T09:05:05.035Z","bookingcode":"5464564","client":"Vodafone S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"90", "anomalies": "0"},
-            {"id":2344324,"bookingdate":"2019-01-03T09:05:05.035Z","bookingcode":"4102440","client":"Tim S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"50", "anomalies": "0"},
-            {"id":4322444,"bookingdate":"2019-01-03T09:05:05.035Z","bookingcode":"1234567","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"60", "anomalies": "0"},
-            {"id":3244343,"bookingdate":"2019-01-08T09:05:05.035Z","bookingcode":"3453525","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"20", "anomalies": "0"},
-            {"id":3242342,"bookingdate":"2019-01-09T09:05:05.035Z","bookingcode":"5464564","client":"Vodafone S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"90", "anomalies": "0"},
-            {"id":2434234,"bookingdate":"2019-01-11T09:05:05.035Z","bookingcode":"4102440","client":"Tim S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"50", "anomalies": "0"},
-            {"id":2342344,"bookingdate":"2019-01-11T09:05:05.035Z","bookingcode":"1234567","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"60", "anomalies": "0"},
-            {"id":4234234,"bookingdate":"2019-01-03T09:05:05.035Z","bookingcode":"3453525","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"20", "anomalies": "0"},
-            {"id":4324344,"bookingdate":"2019-01-07T09:05:05.035Z","bookingcode":"5464564","client":"Vodafone S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"90", "anomalies": "0"}
-            ];
+//         $scope.ordersinline = [
+//             {"idAccettazione":42341,"dataAccettazione":"2019-01-05T09:05:05.035Z","bookingId":"4102440","nomeCliente":"Primo","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"50", "numAnomalieAperte": "0"},
+//             {"idAccettazione":2234342,"dataAccettazione":"2019-01-06T09:05:05.035Z","bookingId":"1234567","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"60", "numAnomalieAperte": "0"},
+//             {"idAccettazione":323434,"dataAccettazione":"2019-01-05T09:05:05.035Z","bookingId":"3453525","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"20", "numAnomalieAperte": "0"},
+//             {"idAccettazione":4234423,"dataAccettazione":"2019-01-07T09:05:05.035Z","bookingId":"5464564","nomeCliente":"Vodafone S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"90", "numAnomalieAperte": "0"},
+//             {"idAccettazione":5234234,"dataAccettazione":"2019-01-08T09:05:05.035Z","bookingId":"4102440","nomeCliente":"Tim S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"50", "numAnomalieAperte": "0"},
+//             {"idAccettazione":2342344,"dataAccettazione":"2019-01-06T09:05:05.035Z","bookingId":"1234567","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"60", "numAnomalieAperte": "0"},
+//             {"idAccettazione":4234234,"dataAccettazione":"2019-01-07T09:05:05.035Z","bookingId":"3453525","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"20", "numAnomalieAperte": "0"},
+//             {"idAccettazione":4423423,"dataAccettazione":"2019-01-04T09:05:05.035Z","bookingId":"5464564","nomeCliente":"Vodafone S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"90", "numAnomalieAperte": "0"},
+//             {"idAccettazione":2344324,"dataAccettazione":"2019-01-03T09:05:05.035Z","bookingId":"4102440","nomeCliente":"Tim S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"50", "numAnomalieAperte": "0"},
+//             {"idAccettazione":4322444,"dataAccettazione":"2019-01-03T09:05:05.035Z","bookingId":"1234567","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"60", "numAnomalieAperte": "0"},
+//             {"idAccettazione":3244343,"dataAccettazione":"2019-01-08T09:05:05.035Z","bookingId":"3453525","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"20", "numAnomalieAperte": "0"},
+//             {"idAccettazione":3242342,"dataAccettazione":"2019-01-09T09:05:05.035Z","bookingId":"5464564","nomeCliente":"Vodafone S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"90", "numAnomalieAperte": "0"},
+//             {"idAccettazione":2434234,"dataAccettazione":"2019-01-11T09:05:05.035Z","bookingId":"4102440","nomeCliente":"Tim S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"50", "numAnomalieAperte": "0"},
+//             {"idAccettazione":2342344,"dataAccettazione":"2019-01-11T09:05:05.035Z","bookingId":"1234567","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"60", "numAnomalieAperte": "0"},
+//             {"idAccettazione":4234234,"dataAccettazione":"2019-01-03T09:05:05.035Z","bookingId":"3453525","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"20", "numAnomalieAperte": "0"},
+//             {"idAccettazione":4234234,"dataAccettazione":"2019-01-03T09:05:05.035Z","bookingId":"3453525","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"20", "numAnomalieAperte": "0"},
+//             {"idAccettazione":4234234,"dataAccettazione":"2019-01-03T09:05:05.035Z","bookingId":"3453525","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"20", "numAnomalieAperte": "0"},
+//             {"idAccettazione":4234234,"dataAccettazione":"2019-01-03T09:05:05.035Z","bookingId":"3453525","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"20", "numAnomalieAperte": "0"},
+//             {"idAccettazione":4234234,"dataAccettazione":"2019-01-03T09:05:05.035Z","bookingId":"3453525","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"20", "numAnomalieAperte": "0"},
+//             {"idAccettazione":4324344,"dataAccettazione":"2019-01-07T09:05:05.035Z","bookingId":"5464564","nomeCliente":"Ultimo","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"90", "numAnomalieAperte": "0"}
+//             ];
 
-        $scope.ordinifinish = [
-            {"id":32434234,"bookingdate":"2016-01-05T09:05:05.035Z","bookingcode":"4102440","client":"Tim S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"50", "anomalies": "0"},
-            {"id":2342342,"bookingdate":"2016-01-05T09:05:05.035Z","bookingcode":"1234567","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"60", "anomalies": "0"},
-            {"id":32344423,"bookingdate":"2016-01-05T09:05:05.035Z","bookingcode":"3453525","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"20", "anomalies": "0"},
-            {"id":32423444,"bookingdate":"2016-01-05T09:05:05.035Z","bookingcode":"5464564","client":"Vodafone S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"90", "anomalies": "0"},
-            {"id":5324234,"bookingdate":"2016-01-05T09:05:05.035Z","bookingcode":"4102440","client":"Tim S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"50", "anomalies": "0"},
-            {"id":3242346,"bookingdate":"2016-01-05T09:05:05.035Z","bookingcode":"1234567","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"60", "anomalies": "0"},
-            {"id":7234423,"bookingdate":"2016-01-05T09:05:05.035Z","bookingcode":"3453525","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"20", "anomalies": "0"},
-            {"id":8242334,"bookingdate":"2016-01-05T09:05:05.035Z","bookingcode":"5464564","client":"Vodafone S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"90", "anomalies": "0"}
-            ];
+        // $scope.ordinifinish = [
+        //     {"idAccettazione":32434234,"dataAccettazione":"2016-01-05T09:05:05.035Z","bookingId":"4102440","nomeCliente":"Tim S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"50", "numAnomalieAperte": "0"},
+        //     {"idAccettazione":2342342,"dataAccettazione":"2016-01-05T09:05:05.035Z","bookingId":"1234567","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"60", "numAnomalieAperte": "0"},
+        //     {"idAccettazione":32344423,"dataAccettazione":"2016-01-05T09:05:05.035Z","bookingId":"3453525","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"20", "numAnomalieAperte": "0"},
+        //     {"idAccettazione":32423444,"dataAccettazione":"2016-01-05T09:05:05.035Z","bookingId":"5464564","nomeCliente":"Vodafone S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"90", "numAnomalieAperte": "0"},
+        //     {"idAccettazione":5324234,"dataAccettazione":"2016-01-05T09:05:05.035Z","bookingId":"4102440","nomeCliente":"Tim S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"50", "numAnomalieAperte": "0"},
+        //     {"idAccettazione":3242346,"dataAccettazione":"2016-01-05T09:05:05.035Z","bookingId":"1234567","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"60", "numAnomalieAperte": "0"},
+        //     {"idAccettazione":7234423,"dataAccettazione":"2016-01-05T09:05:05.035Z","bookingId":"3453525","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"20", "numAnomalieAperte": "0"},
+        //     {"idAccettazione":8242334,"dataAccettazione":"2016-01-05T09:05:05.035Z","bookingId":"5464564","nomeCliente":"Vodafone S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"90", "numAnomalieAperte": "0"}
+        //     ];
+        //
+        // $scope.ordiniblocked = [
+        //     {"idAccettazione":132434,"dataAccettazione":"2016-01-05T09:05:05.035Z","bookingId":"4102440","nomeCliente":"Tim S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"50", "numAnomalieAperte": "1"},
+        //     {"idAccettazione":223423,"dataAccettazione":"2016-01-05T09:05:05.035Z","bookingId":"1234567","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"60", "numAnomalieAperte": "2"},
+        //     {"idAccettazione":323423,"dataAccettazione":"2016-01-05T09:05:05.035Z","bookingId":"3453525","nomeCliente":"Iliad S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"20", "numAnomalieAperte": "1"},
+        //     {"idAccettazione":234234,"dataAccettazione":"2016-01-05T09:05:05.035Z","bookingId":"5464564","nomeCliente":"Vodafone S.p.a.","prodotto":"Posta Target Basic","servizio":"Qui e ora","statoAccettazione":"90", "numAnomalieAperte": "1"}
+        //     ];
 
-        $scope.ordiniblocked = [
-            {"id":132434,"bookingdate":"2016-01-05T09:05:05.035Z","bookingcode":"4102440","client":"Tim S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"50", "anomalies": "1"},
-            {"id":223423,"bookingdate":"2016-01-05T09:05:05.035Z","bookingcode":"1234567","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"60", "anomalies": "2"},
-            {"id":323423,"bookingdate":"2016-01-05T09:05:05.035Z","bookingcode":"3453525","client":"Iliad S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"20", "anomalies": "1"},
-            {"id":234234,"bookingdate":"2016-01-05T09:05:05.035Z","bookingcode":"5464564","client":"Vodafone S.p.a.","product":"Posta Target Basic","service":"Qui e ora","state":"90", "anomalies": "1"}
-            ];
-
-        $scope.headerTableOrdersInline = [{"key": "id", "value": "Tipo", "type": "ordid"},
-                                            {"key": "bookingdate", "value": "Pren. n°", "type": "date"},
-                                            {"key": "bookingcode", "value": "Pren. n°", "type": "text"},
-                                            {"key": "client", "value": "Cliente", "type": "text"},
-                                            {"key": "product", "value": "Prodotto", "type": "text"},
-                                            {"key": "service", "value": "Servizio access.", "type": "text"},
-                                            {"key": "state", "value": "Pezzi", "type": "percentage"},
-                                            {"key": "anomalies", "value": "Anomalie", "type": "text"},
+        $scope.headerTableOrdersInline = [{"key": "codModalitaAccettazione", "value": "Tipo", "type": "ordid"},
+                                            {"key": "dataAccettazione", "value": "Data Prenotazione", "type": "date"},
+                                            {"key": "bookingId", "value": "Pren. n°", "type": "text"},
+                                            {"key": "nomeCliente", "value": "Cliente", "type": "text"},
+                                            {"key": "prodotto", "value": "Prodotto", "type": "text"},
+                                            {"key": "servizio", "value": "Servizio access.", "type": "text"},
+                                            {"key": "numPezzi", "value": "Pezzi", "type": "text"},
+                                            {"key": "statoAccettazione", "value": "Stato", "type": "percentage"},
+                                            {"key": "numAnomalieAperte", "value": "Anomalie", "type": "text"},
                                              {"key": "edit", "value": "", "type": "eye", "title": "Dettaglio Ordine"},
                                              {"key": "edit", "value": "", "type": "detail", "title": "Dettaglio Ordine"}
                                             ];
-        $scope.headerTableOrdersFinish =[{"key": "id", "value": "Tipo", "type": "ordid"},
-                                        {"key": "bookingdate", "value": "Pren. n°", "type": "date"},
-                                        {"key": "bookingcode", "value": "Pren. n°", "type": "text"},
-                                        {"key": "client", "value": "Cliente", "type": "text"},
-                                        {"key": "product", "value": "Prodotto", "type": "text"},
-                                        {"key": "service", "value": "Servizio access.", "type": "text"},
+        $scope.headerTableOrdersFinish =[{"key": "codModalitaAccettazione", "value": "Tipo", "type": "ordid"},
+                                        {"key": "dataAccettazione", "value": "Pren. n°", "type": "date"},
+                                        {"key": "bookingId", "value": "Pren. n°", "type": "text"},
+                                        {"key": "nomeCliente", "value": "Cliente", "type": "text"},
+                                        {"key": "prodotto", "value": "Prodotto", "type": "text"},
+                                        {"key": "servizio", "value": "Servizio access.", "type": "text"},
                                         {"key": "edit", "value": "", "type": "eye", "title": "Dettaglio Ordine"},
                                         {"key": "edit", "value": "", "type": "detail", "title": "Dettaglio Ordine"}
                                     ];
-        $scope.headerTableOrdersBlocked = [{"key": "id", "value": "Tipo", "type": "ordid"},
-                                            {"key": "bookingdate", "value": "Pren. n°", "type": "date"},
-                                            {"key": "bookingcode", "value": "Pren. n°", "type": "text"},
-                                            {"key": "client", "value": "Cliente", "type": "text"},
-                                            {"key": "product", "value": "Prodotto", "type": "text"},
-                                            {"key": "service", "value": "Servizio access.", "type": "text"},
-                                            {"key": "state", "value": "Pezzi", "type": "percentage"},
-                                            {"key": "anomalies", "value": "Anomalie", "type": "text"},
+        $scope.headerTableOrdersBlocked = [{"key": "codModalitaAccettazione", "value": "Tipo", "type": "ordid"},
+                                            {"key": "dataAccettazione", "value": "Pren. n°", "type": "date"},
+                                            {"key": "bookingId", "value": "Pren. n°", "type": "text"},
+                                            {"key": "nomeCliente", "value": "Cliente", "type": "text"},
+                                            {"key": "prodotto", "value": "Prodotto", "type": "text"},
+                                            {"key": "servizio", "value": "Servizio access.", "type": "text"},
+                                            {"key": "statoAccettazione", "value": "Pezzi", "type": "percentage"},
+                                            {"key": "numAnomalieAperte", "value": "Anomalie", "type": "text"},
                                             {"key": "edit", "value": "", "type": "eye", "title": "Dettaglio Ordine"},
                                             {"key": "edit", "value": "", "type": "detail", "title": "Dettaglio Ordine"}
                                         ];
@@ -78,13 +133,13 @@ nsaApp.controller('workingprogres', ['$scope', '$rootScope', '$log', 'modalServi
             {"model": "directacept", "label": "Accettazione Diretta", "type": "checkbox"},
             {"model": "bill", "label": "Bolletta", "type": "checkbox"},
             {"model": "decentralization", "label": "Decentramento", "type": "checkboxend"},
-            {"model": "id", "label": "PRENOTAZIONE", "type":"text", "required":true, "disabledMod": true},
-            {"model": "client", "label": "CLIENTE", "type":"text", "required":true, "disabledMod": true},
-            {"model": "bookingcode", "label": "CONTO", "type":"text", "required":true, "disabledMod": true},
-            {"model": "product", "label": "PRODOTTO", "type":"option", "required":true, "disabledMod": true},
+            {"model": "idAccettazione", "label": "PRENOTAZIONE", "type":"text", "required":true, "disabledMod": true},
+            {"model": "nomeCliente", "label": "CLIENTE", "type":"text", "required":true, "disabledMod": true},
+            {"model": "bookingId", "label": "CONTO", "type":"text", "required":true, "disabledMod": true},
+            {"model": "prodotto", "label": "PRODOTTO", "type":"option", "required":true, "disabledMod": true},
             {"model": "workto", "label": "LAVORATO DA", "type":"option", "required":true, "disabledMod": true},
             {"model": "state", "label": "STATO", "type":"option", "required":true, "disabledMod": true},
-            {"model": "anomalies", "label": "ANOMALIE", "type":"option", "required":true, "disabledMod": true},
+            {"model": "numAnomalieAperte", "label": "ANOMALIE", "type":"option", "required":true, "disabledMod": true},
         ];
         $scope.modalFilterProcess = function(){
             modalService.showModal({}, {

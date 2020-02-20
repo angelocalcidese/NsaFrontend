@@ -1,7 +1,53 @@
 nsaApp.controller('nsaTableController', ['$scope','$log', 'modalService',
     function ($scope, $log, modalService) {
+
+        function createPage(num){
+            var item = [];
+            for(var a=0; a < num; a++){
+                if($scope.dati[a]){
+                    item[a] = $scope.dati[a];
+                    $scope.pagetrue = a;
+                } else {
+                    item[a] = {};
+                }
+            }
+            $scope.dati = item;
+            $log.info($scope.dati);
+            // $scope.pagetrue = countItem / 10;
+            $log.info('pagine piene: ' + Math.ceil($scope.pagetrue));
+        }
+        function overOneUndredItem(){
+            return !!($scope.numberItems && ($scope.numberItems > 100));
+        }
+
+        $scope.$watch("dati", function(newValue, oldValue) {
+           if(newValue && overOneUndredItem() && !$scope.stopPropagation){
+               createPage($scope.numberItems);
+               $scope.stopPropagation = true;
+           }
+        });
+        function countItemPlus(start){
+            if(($scope.numberItems - start) > 100){
+                return start + 99;
+            } else {
+                return  start + ($scope.numberItems - start);
+            }
+        }
         $scope.pageChangeHandler = function(newpage){
-            $log.info('Nuova pagina:' + newpage);
+            var start = '';
+            var finish = '';
+              if(overOneUndredItem() && !$scope.dati[newpage * 10 - 9].idAccettazione){
+                  // chiamo il servizio per QUESTA PAGINA
+                  start = newpage * 10 - 9;
+                  finish = countItemPlus(start);
+                  $scope.callElement($scope.dati ,start, finish);
+              } else if(overOneUndredItem() && !$scope.dati[newpage * 10 + 1].idAccettazione){
+                  // chiamo il servizio per PAGINA SUCCESSIVA
+                  start = newpage * 10 + 1;
+                 finish = countItemPlus(start);
+                 $scope.callElement($scope.dati ,start, finish);
+             }
+           // $log.info($scope.numberItems);
         };
     // Codice Tabella
         $scope.disclaimer = false;
@@ -53,7 +99,9 @@ nsaApp.controller('nsaTableController', ['$scope','$log', 'modalService',
             search: '=',
             detailObj: '=',
             searchElement: '=',
-            tableName:'='
+            tableName:'=',
+            numberItems:'=',
+            callElement:'='
         },
         replace: true,
         controller: 'nsaTableController',
