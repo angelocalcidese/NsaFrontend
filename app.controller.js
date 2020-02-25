@@ -51,6 +51,8 @@ nsaApp.controller('nsaController',
         $scope.sender ="";
         $scope.stepperView = false;
         $scope.searchOrder = "";
+        $scope.filterView = "";
+        $scope.disclaimer = false;
         // $scope.utente = "";
         var permessiPage =[{'dad': 'PROFILE', 'pageName' :'elencouser', 'homepage': true},
                            {'dad': 'PROFILE', 'pageName' :'detailuser'},

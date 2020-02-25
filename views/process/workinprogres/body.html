@@ -5,28 +5,35 @@
     </button>
     </div>
     <div class="nav nsa-nav-tabs">
-        <a href="" ng-click=" changeTab('ordersinline');" class="nsa-nav-tabs__item" ng-class="tabActive == 'ordersinline' ? 'active' : ''"  data-target="#tab1" data-toggle="tab">
+        <a href="" ng-click=" changeTab('coda');" class="nsa-nav-tabs__item" ng-class="tabActive == 'coda' ? 'active' : ''"  data-target="#tab1" data-toggle="tab">
             In coda ({{righeTotalOrdersInLine}})
         </a>
-        <a href="" ng-click="changeTab('ordinifinish');" class="nsa-nav-tabs__item" ng-class="tabActive == 'ordinifinish' ? 'active' : ''" data-target="#tab2" data-toggle="tab">
+        <a href="" ng-click="changeTab('conclusi');" class="nsa-nav-tabs__item" ng-class="tabActive == 'conclusi' ? 'active' : ''" data-target="#tab2" data-toggle="tab">
             conclusi ({{righeTotalOrdersCompleted}})
         </a>
-        <a href="" ng-click="changeTab('ordiniblocked');" class="nsa-nav-tabs__item" ng-class="tabActive == 'ordiniblocked' ? 'active' : ''" data-target="#tab2" data-toggle="tab">
+        <a href="" ng-click="changeTab('bloccati');" class="nsa-nav-tabs__item" ng-class="tabActive == 'bloccati' ? 'active' : ''" data-target="#tab2" data-toggle="tab">
             bloccati ({{righeTotalOrdersBlocked}})
         </a>
     </div>
-    <div class="u-pos-absolute pos-bl">
-        <a href="" class="nsa-button-link " title="Filtra per" ng-click="modalFilterProcess()">
+    <div class="u-pos-absolute pos-bl" >
+        <a href="" class="nsa-button-link " style="float:left"  title="Filtra per" ng-click="modalFilterProcess()">
             <span class="nsa-link-14-500 nsa-link--has-underline">Filtra per</span>
             <span class="icomoon icomoon-filter"></span>
         </a>
+        <div class="nsa-tag" style="float:left" ng-if="filterView">
+            <span class="nsa-tag__text">{{filterView.length}}</span>
+            <a ng-click="cancellaFiltri()">
+                <span class="icomoon icomoon-cross"></span>
+            </a>
+        </div>
     </div>
+
 </div>
     <div class="u-pos-absolute pos-bl">
     </div>
 </div>
 <!--TABELLA ORDINI IN CODA-->
-<div ng-if="tabActive == 'ordersinline'">
+<div ng-if="tabActive == 'coda'">
     <div class="d-flex row">
         <div class="col-sm-4">
             <div class="alert alert-success" ng-show="viewMessage=='OK'">
@@ -54,7 +61,7 @@
     ></nsa-table>
 </div>
 <!--TABELLA ORDINI CHIUSI-->
-<div ng-if="tabActive == 'ordinifinish'">
+<div ng-if="tabActive == 'conclusi'">
     <div class="d-flex row">
         <div class="col-sm-4">
             <div class="alert alert-success" ng-show="viewMessage=='OK'">
@@ -86,11 +93,11 @@
             function-detail="detailOrdersInline"
             search=false
             number-items="righeTotalOrdersCompleted"
-            call-element="listWorkingProgress"
+            call-element="listWorkBlocked"
     ></nsa-table>
 </div>
 <!--TABELLA ORDINI BLOCCATI-->
-<div ng-if="tabActive == 'ordiniblocked'">
+<div ng-if="tabActive == 'bloccati'">
     <div class="d-flex row">
         <div class="col-sm-4">
             <div class="alert alert-success" ng-show="viewMessage=='OK'">
@@ -122,6 +129,6 @@
             function-detail="detailOrdersBlocked"
             search=false
             number-items="righeTotalOrdersBlocked"
-            call-element="listWorkingProgress"
+            call-element="listWorkFinished"
     ></nsa-table>
 </div>

@@ -75,7 +75,10 @@
                     <div class="row row--has-mb-25">
                         <input type="hidden" name="id" ng-if="modalOptions.data['id']" id="id" ng-model="formvalue.modalOptions.input['id']" ng-init="formvalue.modalOptions.input['id'] = modalOptions.data['id']" />
                         <div class=" pad-input" ng-repeat="item in modalOptions.input"  ng-class="item.type == 'textarea' || item.type == 'title' || item.type == 'checkboxend' ? 'col-sm-12' : 'col-sm-6' ">
-                            <div class="nsa-input" ng-if="item.type != 'option' && item.type != 'textarea'" ng-class="item.type == 'checkbox' || item.type == 'checkboxend' ? 'checkbox_custom' : ''">
+                            <div class="nsa-input"
+                                 ng-if="item.type != 'option' && item.type != 'textarea'"
+                                 ng-class="{'checkbox_custom': item.type == 'checkbox' || item.type == 'checkboxend', 'has-error': modalForm[item.model].$invalid}"
+                            >
                             <label class="nsa-input__label " ng-if="item.type != 'textarea' && item.type != 'checkbox' && item.type != 'checkboxend'" for="{{item.model}}" name="{{item.model}}">
                                 {{item.label}}</label>
                             <input ng-if="item.type == 'text' || item.type == 'weight'"
@@ -90,6 +93,18 @@
                                    ng-disabled="modalOptions.data['id'] && item.disabledMod"
                                    placeholder="Inserisci" />
                                 <span ng-if="item.type == 'weight'" class="nsa-input__unity-container__unity gr">gr</span>
+                                <input ng-if="item.type == 'number'"
+                                       type="text"
+                                       ng-pattern="regex"
+                                       class="nsa-input__input "
+                                       maxlength="{{item.maxlength || 30}}"
+                                       id="{{item.model}}"
+                                       name="{{item.model}}"
+                                       ng-model="formvalue.modalOptions.input[item.model]"
+                                       ng-init="formvalue.modalOptions.input[item.model] = modalOptions.data[item.model]"
+                                       ng-required="item.required && !item.disabledMod"
+                                       ng-disabled="modalOptions.data['id'] && item.disabledMod"
+                                       placeholder="Inserisci solo numeri" />
                             <input ng-if="item.type == 'email'"
                                    type="email"
                                    class="nsa-input__input"

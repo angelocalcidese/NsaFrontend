@@ -37,6 +37,7 @@ nsaApp.service('modalService', ['$uibModal', '$state', function ($uibModal, $sta
             tempModalDefaults.controller = ['$scope', '$rootScope', '$uibModalInstance', '$log', '$filter', '$timeout', function ($scope, $rootScope, $uibModalInstance, $log, $filter, $timeout) {
 
                 $scope.modalOptions = tempModalOptions;
+                $scope.regex =  /^\d*$/;
                 $scope.campiDiRicerca = [];
                 $scope.formvalue = {};
                 $scope.listSelected = [];

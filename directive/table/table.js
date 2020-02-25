@@ -1,6 +1,19 @@
 nsaApp.controller('nsaTableController', ['$scope','$log', 'modalService',
     function ($scope, $log, modalService) {
 
+    $scope.pesaturaCont = function(item){
+        return item.statoAccettazione === 'IN PESATURA';
+    };
+    $scope.anomalieContN = function(item){
+       return (item.statoAccettazione !== 'IN PESATURA') && (item.numAnomalieAperte > 0) && (item.bloccataDaAnomalia === 'N');
+    };
+    $scope.anomalieContY = function(item){
+       return (item.statoAccettazione !== 'IN PESATURA') && (item.numAnomalieAperte > 0) && (item.bloccataDaAnomalia === 'Y');
+    };
+    $scope.anomalieContZero = function(item){
+       return (item.statoAccettazione !== 'IN PESATURA') && (item.numAnomalieAperte === 0);
+    };
+
         function createPage(num){
             var item = [];
             for(var a=0; a < num; a++){
@@ -20,7 +33,8 @@ nsaApp.controller('nsaTableController', ['$scope','$log', 'modalService',
             return !!($scope.numberItems && ($scope.numberItems > 100));
         }
 
-        $scope.$watch("dati", function(newValue, oldValue) {
+        $scope.$watch("dati", function(newValue) {
+            $scope.disclaimer = false;
            if(newValue && overOneUndredItem() && !$scope.stopPropagation){
                createPage($scope.numberItems);
                $scope.stopPropagation = true;
