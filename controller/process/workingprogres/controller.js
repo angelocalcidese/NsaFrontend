@@ -18,14 +18,16 @@ nsaApp.controller('workingprogres', ['$scope', '$rootScope', '$log', 'modalServi
                     $scope.productOptions = response.data.options.productOptions;
                     $scope.userOptions = response.data.options.userOptions;
                     $scope.statusOptions = response.data.options.statusOptions;
-                    $scope.anomaliesOptions = [{"entityId":"0","entityValue":"Si"},{"entityId":"1","entityValue":"No"}];
+                    $scope.anomaliesOptions = [{"entityId":"1","entityValue":"Si"},{"entityId":"0","entityValue":"No"}];
 
                      // $scope.loaderModal('OK', 'Elementi caricati', 1);
 
                     $scope.modalFilterInput = [ {"model": "", "label": "TIPO", "type": "title"},
                         {"model": "AD", "label": "Accettazione Diretta", "type": "checkbox"},
-                        {"model": "B", "label": "Bolletta", "type": "checkbox"},
-                        {"model": "DC", "label": "Decentramento", "type": "checkboxend"},
+                        {"model": "B", "label": "Accettazione di Bolgetta", "type": "checkbox"},
+                        {"model": "ED", "label": "Accettazione Decentrata per Editoria", "type": "checkbox"},
+                        {"model": "E", "label": "Editoria", "type": "checkbox"},
+                        {"model": "PE", "label": "Posta Easy", "type": "checkboxend"},
                         {"model": "codPrenotazione", "label": "PRENOTAZIONE", "type":"number", "required":false, "disabledMod": true},
                         {"model": "codiceCliente", "label": "CLIENTE", "type":"text", "required":false, "disabledMod": true},
                         {"model": "conto", "label": "CONTO", "type":"text", "required":false, "disabledMod": true},
@@ -116,19 +118,19 @@ nsaApp.controller('workingprogres', ['$scope', '$rootScope', '$log', 'modalServi
         });
 
         $scope.headerTableOrdersInline = [{"key": "tipoAccettazione", "value": "Tipo", "type": "ordid"},
-                                            {"key": "dataAccettazione", "value": "Data Prenotazione", "type": "date"},
+                                            {"key": "dataAccettazione", "value": "Data Accettazione", "type": "date"},
                                             {"key": "bookingId", "value": "Pren. n°", "type": "text"},
                                             {"key": "nomeCliente", "value": "Cliente", "type": "text"},
                                             {"key": "prodotto", "value": "Prodotto", "type": "text"},
                                             {"key": "servizio", "value": "Servizio access.", "type": "text"},
                                             {"key": "numPezzi", "value": "Pezzi", "type": "text"},
                                             {"key": "percentualeAvanzamento", "value": "Stato", "type": "percentage"},
-                                            {"key": "numAnomalieAperte", "value": "Anomalie", "type": "text"},
+                                            {"key": "numAnomalieAperte", "value": "Anomalie", "type": "anomalie"},
                                              {"key": "edit", "value": "", "type": "eye", "title": "Dettaglio Ordine"},
                                              {"key": "edit", "value": "", "type": "detail", "title": "Dettaglio Ordine"}
                                             ];
         $scope.headerTableOrdersFinish =[{"key": "tipoAccettazione", "value": "Tipo", "type": "ordid"},
-                                        {"key": "dataAccettazione", "value": "Data", "type": "date"},
+                                        {"key": "dataAccettazione", "value": "Data Accettazione", "type": "date"},
                                         {"key": "bookingId", "value": "Ordine n°", "type": "text"},
                                         {"key": "nomeCliente", "value": "Cliente", "type": "text"},
                                         {"key": "prodotto", "value": "Prodotto", "type": "text"},
@@ -137,17 +139,17 @@ nsaApp.controller('workingprogres', ['$scope', '$rootScope', '$log', 'modalServi
                                         {"key": "descModalitaPagamento", "value": "Pagamento", "type": "text"},
                                         {"key": "", "value": "Valore", "type": "text"},
                                         {"key": "percentualeAvanzamento", "value": "Stato", "type": "percentage"},
-                                        {"key": "numAnomalieAperte", "value": "Anomalie", "type": "text"},
-                                        {"key": "edit", "value": "", "type": "eye", "title": "Dettaglio Ordine"}
+                                        {"key": "numAnomalieAperte", "value": "Anomalie", "type": "anomalie"},
+                                        {"key": "edit", "value": "", "type": "eyeCustom", "title": "Dettaglio Ordine"}
                                     ];
         $scope.headerTableOrdersBlocked = [{"key": "tipoAccettazione", "value": "Tipo", "type": "ordid"},
-                                            {"key": "dataAccettazione", "value": "Pren. n°", "type": "date"},
+                                            {"key": "dataAccettazione", "value": "Data Accettazione", "type": "date"},
                                             {"key": "bookingId", "value": "Pren. n°", "type": "text"},
                                             {"key": "nomeCliente", "value": "Cliente", "type": "text"},
                                             {"key": "prodotto", "value": "Prodotto", "type": "text"},
                                             {"key": "servizio", "value": "Servizio access.", "type": "text"},
                                             {"key": "percentualeAvanzamento", "value": "Pezzi", "type": "percentage"},
-                                            {"key": "numAnomalieAperte", "value": "Anomalie", "type": "text"},
+                                            {"key": "numAnomalieAperte", "value": "Anomalie", "type": "anomalie"},
                                             {"key": "edit", "value": "", "type": "eye", "title": "Dettaglio Ordine"},
                                             {"key": "edit", "value": "", "type": "detail", "title": "Dettaglio Ordine"}
                                         ];
@@ -161,27 +163,79 @@ nsaApp.controller('workingprogres', ['$scope', '$rootScope', '$log', 'modalServi
                 scope: $scope,
                 type: "insert",
                 input: $scope.modalFilterInput,
+                data: $scope.$parent.filterView,
                 callbackFunction: 'callBackFilter'
             });
         };
+
         $scope.callBackFilter = function(filter){
-            if(filter.AD || filter.B || filter.DC) var tipo = [];
-            if(filter.AD) tipo.push('AD');
-            if(filter.B) tipo.push('B');
-            if(filter.DC) tipo.push('DC');
+
+            if(filter.AD || filter.B || filter.ED || filter.E || filter.PE) var tipo = [];
+            var countCheck = 0;
+            if(filter.AD) {tipo.push('AD'); }
+            if(filter.B) {tipo.push('B');}
+            if(filter.ED) {tipo.push('ED');}
+            if(filter.E) {tipo.push('E');}
+            if(filter.PE) {tipo.push('PE');}
+
+            if(filter.AD !== undefined) { countCheck++;}
+            if(filter.B !== undefined) { countCheck++;}
+            if(filter.ED !== undefined) { countCheck++;}
+            if(filter.E !== undefined) { countCheck++;}
+            if(filter.PE !== undefined) { countCheck++;}
 
             if(tipo) filter.tipo = tipo;
             $scope.$parent.filterView = filter;
+
+            var keys = Object.keys(filter);
+            var count = 0;
+            for(var a = 0; a <= keys.length; a++){
+                if((filter[keys[a]] !== undefined) && (filter[keys[a]] !== "")) count++;
+            }
+            $scope.$parent.countFilter = count - countCheck;
             $scope.listWorkingProgress('', '1', '100');
         };
 
+        // MODALE ORDINI CONCLUSI
+        $scope.detailOrdersFinished = function(dato){
+            $scope.loaderModal();
+            var campi = {"username": $scope.operatore.user.username,
+                "cmp": $scope.operatore.user.zona,
+                "idAccettazione":dato.idAccettazione
+            };
+            RestServiceProcess.getDettaglioConclusa(campi)
+                .then(function(response){
+                    if(response.data.code === 'KO'){
+                        $scope.loaderModal('KO', response.data.description);
+                    } else {
+                        $scope.loaderModal('OK', 'Elementi caricati', 1);
+                        modalService.showModal({}, {
+                            headerText: "ORDINE N." + dato.idAccettazione,
+                            buttonOk: "Esporta",
+                            contentType: "",
+                            bodyText: "",
+                            scope: $scope,
+                            type: "finished",
+                            input: "",
+                            data: response.data.lavorazione,
+                            callbackFunction: ""
+                        });
+                    }
+                })
+                .catch(function(error){
+                    $scope.loaderModal('KO', error.data.description);
+                });
+        };
         $scope.changeTab = function(tab){
-            $scope.ordersinline = '';
-            $scope.ordinifinish = '';
-            $scope.ordiniblocked = '';
             $scope.tabActive = tab;
-            $state.params.tab = tab;
-            $state.go('root.workingprogres', {tab: tab});
+
+            if(tab !== $state.params.tab){
+                $scope.ordersinline = '';
+                $scope.ordinifinish = '';
+                $scope.ordiniblocked = '';
+                $state.params.tab = tab;
+                $state.go('root.workingprogres', {tab: tab});
+            }
         };
         if($state.params.tab){
             $scope.changeTab($state.params.tab);
@@ -189,7 +243,52 @@ nsaApp.controller('workingprogres', ['$scope', '$rootScope', '$log', 'modalServi
             $state.params.tab = 'users';
             $scope.changeTab('users');
         }
-        $scope.detailOrdersInline = function(item){
+        /**
+         * Controllo provider Contract
+         * @param item
+         */
+        $scope.controldetailOrdersInline = function(item){
+            if(item.idContoFatturazione){
+                modalService.showModal({}, {
+                    headerText: "Spedizione",
+                    contentType: "",
+                    bodyText: "Provider Contract o Conto Contrattuale che verrà utilizzato per la spedizione: " + item.idContoFatturazione,
+                    scope: $scope,
+                    type: "confirmPC",
+                    buttonOk: "ok",
+                    input: '',
+                    data: item,
+                    callbackFunction: 'callBackControlProviderContr'
+                });
+            } else {
+                item.tipoAzione = true;
+                $scope.callBackControlProviderContr(item);
+            }
+
+        };
+        $scope.callBackControlProviderContr = function(dati){
+            if(dati.tipoAzione){
+                delete dati.tipoAzione;
+                $scope.modalPCCCInput = [
+                    {"model": "conto", "label": "Cliente", "type":"label", "value": dati.nomeCliente , "required":false, "disabledMod": true},
+                    {"model": "nomeProdotto", "label": "PROVIDER CONTRACT / CONTO CONTRATTUALE", "type":"option", "required":true, "disabledMod": true , "option": "", "open": false},
+                ];
+
+                modalService.showModal({}, {
+                    headerText: "Cerca Provider Contract",
+                    contentType: "Inserire il Provider Contract o Conto Contrattuale per avviare l’ordine.",
+                    bodyText: "",
+                    scope: $scope,
+                    type: "insert",
+                    input: $scope.modalPCCCInput,
+                    data: dati,
+                    callbackFunction: 'detailOrders'
+                });
+            } else {
+                $scope.detailOrders(dati);
+            }
+        };
+        $scope.detailOrders = function(item){
             $state.go('root.workingprogres.working', {order: item});
         };
 

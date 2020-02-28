@@ -1,5 +1,10 @@
     <form name="modalForm">
-    <div class="modal-dialog modal-dialog-centered" role="document" ng-if="modalOptions.type != 'loader'">
+        <script ng-if="modalOptions.type == 'finished'">
+            $(function() {
+                $(".modal-dialog").addClass("order-close");}
+                );
+        </script>
+    <div class="modal-dialog modal-dialog-centered" ng-class="{'finish-modal' : modalOptions.type == 'finished'}" role="document" ng-if="modalOptions.type != 'loader'">
         <div class="">
             <div class="modal-header">
                 <h5 class="modal-title" id="modal2-title">{{modalOptions.headerText}}</h5>
@@ -7,8 +12,19 @@
                     <span class="icomoon icomoon-cross" aria-hidden="true"></span>
                 </button>
             </div>
+            <div class="modal-body" ng-if="modalOptions.type == 'confirmPC'">
+                <!--<p class="nsa-t-12-400 u-text-transform u-mb-10">{{modalOptions.bodyText}}</p>-->
+                <div class="nsa-box-providing">
+                    <span class="icomoon icomoon-mark"></span>
+                    <span class="nsa-box-provinding__text">{{modalOptions.bodyText}}</span>
+                </div>
+            </div>
             <div class="modal-body" ng-if="modalOptions.type == 'confirm'">
-                <p class="nsa-t-12-400 u-text-transform u-mb-10">{{modalOptions.bodyText}}</p>
+                <!--<p class="nsa-t-12-400 u-text-transform u-mb-10">{{modalOptions.bodyText}}</p>-->
+                <div class="nsa-box-providing">
+                    <span class="icomoon icomoon-mark"></span>
+                    <span class="nsa-box-provinding__text">{{modalOptions.bodyText}}</span>
+                </div>
             </div>
             <div class="modal-body table-modal" ng-if="modalOptions.type == 'addTable'">
                 <div class="row">
@@ -81,6 +97,7 @@
                             >
                             <label class="nsa-input__label " ng-if="item.type != 'textarea' && item.type != 'checkbox' && item.type != 'checkboxend'" for="{{item.model}}" name="{{item.model}}">
                                 {{item.label}}</label>
+                                <span ng-if="item.type == 'label'" class="item__description">{{item.value}}</span>
                             <input ng-if="item.type == 'text' || item.type == 'weight'"
                                    type="input"
                                    class="nsa-input__input"
@@ -242,51 +259,178 @@
                     </div>
                 </div>
             </div>
-            <!-- END ATT TO -->
-            <!-- DETAIL -->
-            <!--<div class="modal-body" ng-if="modalOptions.type == 'detail'">-->
-
-                    <!--<div class="row row-margin">-->
-                        <!--<div class="col-sm-6 pad-input" ng-repeat="item in modalOptions.input" >-->
-                            <!--<div class="nsa-input" >-->
-                            <!--<label class="nsa-input__label " for="{{item.model}}" name="{{item.model}}">-->
-                                <!--{{item.label}}</label>-->
-                            <!--<input ng-if="item.type == 'text'" type="input" class="nsa-input__input" id="{{item.model}}" name="{{item.model}}" value="{{modalOptions.data[item.model]}}" ng-disabled="true" >-->
-
-                                <!--<div class="modal-body__radio-section" ng-if="item.type == 'radiobutton2'">-->
-                                <!--<div class="nsa-radio col-sm-6" >-->
-                                <!--<input class="nsa-radio__input" type="radio"  id="radio-1" ng-checked="modalOptions.data[item.model] == true" value="true" name="radio-work-order" aria-checked="false" ng-disabled="true">-->
-                                <!--<label class="nsa-radio__label" for="radio-1">Si</label>-->
-                                <!--</div>-->
-
-                                <!--<div class="nsa-radio col-sm-6" >-->
-                                <!--<input class="nsa-radio__input" type="radio" id="radio-2" ng-checked="modalOptions.data[item.model] == false" value="false" name="radio-work-order" aria-checked="false" ng-disabled="true">-->
-                                <!--<label class="nsa-radio__label" for="radio-2">No</label>-->
-                                <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-
-
-            <!--</div>-->
-            <!-- END DETAIL -->
+        <div class="modal-body" ng-if="modalOptions.type == 'finished'">
+            <div class="card-white u-mb-10">
+                <div class="row u-mb-20">
+                    <div class="col-sm-3">
+                        <div class="item">
+                            <span class="item__title">cliente</span>
+                            <span class="item__subtitle">Tim S.p.A.</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="item">
+                            <span class="item__title">sap</span>
+                            <span class="item__subtitle">12345678</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="item">
+                            <span class="item__title">provider contract</span>
+                            <span class="item__subtitle">12345678-004</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="item">
+                            <span class="item__title">offerta commerciale</span>
+                            <span class="item__subtitle">SMA Universale</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="item">
+                            <span class="item__title">forma contrattuale</span>
+                            <span class="item__subtitle">Conto proprio</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="item">
+                            <span class="item__title">service prenotatore</span>
+                            <span class="item__subtitle">-</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="item">
+                            <span class="item__title">finalizzato da</span>
+                            <span class="item__subtitle">ROSSIMR1</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="item">
+                            <span class="item__title">data competenza</span>
+                            <span class="item__subtitle">12/10/2019</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-cards">
+                <div class="card-white l-flex-column card-white--less-p">
+                    <h3 class="nsa-t-18-500 nsa-t--has-uppercase text-center u-regular-gray u-mb-25">
+                        processo di lavorazione
+                    </h3>
+                    <div class="item item--less-fs u-mb-25">
+                        <span class="item__title">cliente</span>
+                        <span class="item__subtitle item__subtitle--approved">ESITO OK</span>
+                    </div>
+                    <div class="item item--less-fs u-mb-25">
+                        <span class="item__title">cliente</span>
+                        <span class="item__subtitle item__subtitle--approved">ESITO OK.</span>
+                    </div>
+                    <div class="item item--less-fs u-mb-25">
+                        <span class="item__title">cliente</span>
+                        <span class="item__subtitle item__subtitle--approved">ESITO OK</span>
+                    </div>
+                    <div class="item item--less-fs">
+                        <span class="item__title">altre anomalie</span>
+                        <span class="item__subtitle item__subtitle--approved">-</span>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-card__body">
+                        <div class="l-flex-between u-mb-15">
+                            <div class="item">
+                                <span class="item__title">prodotto</span>
+                                <span class="item__subtitle">Posta Target Basic</span>
+                            </div>
+                            <div class="item">
+                                <span class="item__title">N°pezzi</span>
+                                <span class="item__subtitle">200</span>
+                            </div>
+                        </div>
+                        <div class="l-flex u-mb-20">
+                            <div class="item">
+                                <span class="item__title">modalità di pagamento</span>
+                                <span class="item__subtitle">Anticipato</span>
+                            </div>
+                        </div>
+                        <div class="l-flex">
+                            <div class="item item--full">
+                                <span class="item__title item__title--more-mb">Posizioni e Servizi - Provider Contract 12345678-001</span>
+                                <div class="item__container-informations u-mb-20">
+                                    <div class="item__container-informations__row">
+                                        <span class="item__subtitle item__subtitle--more-fw">P1 - Posta Target Basic</span>
+                                        <span class="item__subtitle">- 125,00 €</span>
+                                    </div>
+                                    <div class="item__container-informations__row">
+                                        <span class="item__subtitle item__subtitle--more-fw">Servizio 1</span>
+                                        <span class="item__subtitle">- 8,00 €</span>
+                                    </div>
+                                    <div class="item__container-informations__row">
+                                        <span class="item__subtitle item__subtitle--more-fw">Servizio 2</span>
+                                        <span class="item__subtitle">- 5,50 €</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="l-flex">
+                            <div class="item item--full">
+                                <div class="item__title item__title--more-mb">
+                                    servizi di altri provider contract:
+                                </div>
+                                <div class="item__container-informations">
+                                    <div class="item__container-informations__row">
+                                        <span class="item__subtitle">Servizio 3</span>
+                                        <span class="item__subtitle">- 8,00 €</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="summary-card__footer">
+                        <span class="nsa-t-22-500 u-regular-gray">Totale</span>
+                        <span class="nsa-t-22-900 u-regular-gray">146,50 €</span>
+                    </div>
+                </div>
+            </div>
+        </div>
             <div class="modal-footer" >
+                <!--ANNULLA BASE-->
                 <div class="col-sm-6">
 
-                    <button type="button" class="btn btn-outline-primary pull-right" ng-click="modalOptions.close()">
+                    <button type="button" ng-if="modalOptions.type != 'confirmPC'" class="btn btn-outline-primary pull-right" ng-click="modalOptions.close()">
                     annulla
                     </button>
                 </div>
+
+                <!--TASTI CONFIRM-->
+                <div class="col-sm-6" ng-if="modalOptions.type == 'confirmPC'">
+                    <button type="button"
+
+                            class="btn btn-outline-primary pull-right"
+                            ng-click="modalOptions.data.tipoAzione = 'change'; modalOptions.ok(modalOptions.data)">
+                    Cambia
+                    </button>
+                </div>
+                <div class="col-sm-6" ng-if="modalOptions.type == 'confirmPC'">
+                    <button type="button"
+                            class="btn btn-primary"
+
+                            ng-click="modalOptions.ok(modalOptions.data)">
+                        {{modalOptions.buttonOk || 'applica'}}
+                    </button>
+                </div>
+
+                <!--TASTI FORM-->
                 <div class="col-sm-6" >
                     <button type="button" class="btn btn-primary"
-                            ng-if="modalOptions.type != 'addToTable'"
+                            ng-if="modalOptions.type != 'addToTable' && modalOptions.type != 'confirmPC'"
                             ng-disabled="!modalForm.$valid"
                             ng-click="modalOptions.ok(formvalue.modalOptions.input)">
                         {{modalOptions.buttonOk || 'applica'}}
                     </button>
                     <button type="button" class="btn btn-primary"
-                            ng-if="modalOptions.type == 'addToTable'"
+                            ng-if="modalOptions.type == 'addToTable'&& modalOptions.type != 'confirmPC'"
                             ng-click="modalOptions.ok(listSelected)">
                         {{modalOptions.buttonOk || 'applica'}}
                     </button>
@@ -294,7 +438,7 @@
 
             </div>
         </div>
-    </div>
+
         <div class="modal-dialog modal-dialog--small modal-dialog-centered modal-loader" role="document" style="margin-top: 40%;" ng-if="modalOptions.type == 'loader'">
             <div class="modal-content" style="box-shadow: none; background: none; border: none;">
                 <div class="modal-body table-modal">

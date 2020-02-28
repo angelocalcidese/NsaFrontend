@@ -14,7 +14,7 @@
             <div class="card-order-information-container__header">
                 <div class="card-order-information-container__header__title">
                               <span class="card-order-information-container__header__title__order-information-number">
-                               {{detail.idCliente}}
+                               {{detail.codiceCliente}}
                               </span>
                     <span class="card-order-information-container__header__title__client">
                                {{detail.nomeCliente}}
@@ -28,17 +28,17 @@
                 <div class="card-order-information-container__body__information-box">
                     <div class="card-order-information-container__body__information-box__line">
                         <span class="card-order-information-container__body__information-box__title">Provider contract</span>
-                        <span class="card-order-information-container__body__information-box__value">-</span>
-                    </div>
-
-                    <div class="card-order-information-container__body__information-box__line">
-                        <span class="card-order-information-container__body__information-box__title">Offerta commerciale</span>
                         <span class="card-order-information-container__body__information-box__value">{{detail.contoFatturazione}}</span>
                     </div>
 
                     <div class="card-order-information-container__body__information-box__line">
+                        <span class="card-order-information-container__body__information-box__title">Offerta commerciale</span>
+                        <span class="card-order-information-container__body__information-box__value">{{detail.offertaCommerciale}}</span>
+                    </div>
+
+                    <div class="card-order-information-container__body__information-box__line">
                         <span class="card-order-information-container__body__information-box__title">Forma contrattuale</span>
-                        <span class="card-order-information-container__body__information-box__value">{{}}</span>
+                        <span class="card-order-information-container__body__information-box__value">{{detail.formaContrattuale}}</span>
                     </div>
 
                     <div class="card-order-information-container__body__information-box__line">
@@ -56,7 +56,10 @@
                     <div class="nsa-content nsa-content--bigger">
                         <div class="nsa-content__container-title">
                             <p class="nsa-content__container-title__title">{{detail.prodotto}}</p>
-                            <span class="icomoon icomoon-acceptance-approved"></span>
+                            <span class="icomoon "
+                                  ng-class="{'icomoon-acceptance-approved': detail.tipoAccettazione == 'AD' || detail.tipoAccettazione == 'AD' || detail.tipoAccettazione == 'E',
+                                            'icomoon-briefcase':detail.tipoAccettazione == 'B', 'icomoon-parcel':detail.tipoAccettazione == 'ED'}"
+                            ></span>
                         </div>
                         <div class="nsa-content__info">
                             <span class="icomoon icomoon-reservations"></span>
@@ -77,8 +80,8 @@
                             </p>
                         </div>
                         <div class="nsa-content__footer">
-                            <span class="nsa-content__footer__work-by"> Lavorato da: -</span>
-                            <button type="button" class="btn btn-navigation more-pd-right onlyIcon" >
+                            <span class="nsa-content__footer__work-by"> Lavorato da: {{detail.lavoratoDa}}</span>
+                            <button type="button" class="btn btn-navigation more-pd-right onlyIcon" ng-click="functionDetail(detail)">
                                 <span class="icomoon icomoon-arrow-right"></span>
                             </button>
                         </div>
@@ -91,7 +94,7 @@
         <tr>
             <th class="nsa-table__intestation__item"
                 ng-repeat="item in customHeader"
-                ng-class="{'tw-30': item.type=='detail', 'tw-60' : item.type!='id', 'tw-60' : item.type!='ordid','nsa-table__intestation__item--has-sorter': item.type!='id' && item.type!='edit' && item.type!='detail' && item.type!='ordid' && item.type!='eye'}"
+                ng-class="{'tw-30': item.type=='detail', 'tw-60' : item.type!='ordid' && item.type!='id','nsa-table__intestation__item--has-sorter': item.type!='id' && item.type!='edit' && item.type!='detail' && item.type!='ordid' && item.type!='eye' && item.type!='eyeCustom'}"
                 ng-click="sort(item.key)"
             >
                 {{item.value}}
@@ -108,11 +111,14 @@
                 <div class="wrap" ng-if="item.type=='id'"><span class="icomoon icomoon-user icomoon--lg"></span></div>
                 <div class="wrap" ng-if="item.type=='ordid'">
                     <span ng-if="dato[item.key] == 'AD'" class="icomoon icomoon-acceptance-approved icomoon--lg"></span>
-                    <span ng-if="dato[item.key] == 'PE'" class="icomoon icomoon-acceptance-approved icomoon--lg"></span>
-                    <span ng-if="dato[item.key] == 'B'"class="icomoon icomoon-acceptance-briefcase icomoon--lg"></span>
-                    <span ng-if="dato[item.key] == 'DEC' || dato[item.key] == 'ED'" class="icomoon-acceptance-parcel icomoon--lg"></span>
+                    <span ng-if="dato[item.key] == 'PE'" class="icomoon icomoon-order-in-ad icomoon--lg"></span>
+                    <span ng-if="dato[item.key] == 'B'" class="icomoon icomoon-briefcase icomoon--lg"></span>
+                    <span ng-if="dato[item.key] == 'ED'" class="icomoon icomoon-parcel icomoon--lg"></span>
+                    <span ng-if="dato[item.key] == 'E'" class="icomoon icomoon-declared-weight icomoon--lg"></span>
                 </div>
                 <div class="wrap" ng-if="item.type=='text'">{{dato[item.key]}}</div>
+                <div class="wrap" ng-if="item.type=='anomalie' && dato[item.key] > 0"><a href="" class="nsa-link-14-500 nsa-link--has-underline">{{dato[item.key]}}</a></div>
+                <div class="wrap" ng-if="item.type=='anomalie'&& dato[item.key] == 0">-</div>
                 <div class="wrap" ng-if="item.type=='date'">{{dato[item.key] | date : "dd/MM/yy"}}</div>
                 <div class="wrap" ng-if="item.type=='paring' && dato[item.key] > 0"
                      ng-repeat="val in item.paringValue | filter:{entityId:dato[item.key]}"
@@ -150,6 +156,15 @@
                     <div class="nsa-overflow-menu">
                         <div class="nsa-overflow-menu__header btn-group dropleft show">
                             <button type="button" class="btn btn-outline-primary is-circle" ng-click="disclaimerFun(dato)">
+                                <span class="icomoon icomoon-view" ></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrap hasWiew" ng-if="item.type=='eyeCustom'">
+                    <div class="nsa-overflow-menu">
+                        <div class="nsa-overflow-menu__header btn-group dropleft show">
+                            <button type="button" class="btn btn-outline-primary is-circle" ng-click="functionDetail(dato)">
                                 <span class="icomoon icomoon-view" ></span>
                             </button>
                         </div>

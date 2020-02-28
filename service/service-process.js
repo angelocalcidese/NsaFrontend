@@ -25,9 +25,14 @@ nsaApp.service('RestServiceProcess', ['$http','BASEPATH', 'APP',
 
             return $http.get(BASEPATH + 'accettazione/filtri/option' + search);
         };
+        var _getDettaglioConclusa = function(campi) {
+            var search = "?frazionario=" + campi.cmp + "&username=" + campi.username + "&idAccettazione=" + campi.idAccettazione;
+            return $http.get(BASEPATH + 'accettazione/dettaglio/conclusa' + search);
+        };
             return {
                 tailMachining: _tailMachining,
-                getFiltriOption: _getFiltriOption
+                getFiltriOption: _getFiltriOption,
+                getDettaglioConclusa: _getDettaglioConclusa
             };
         }
     ]);

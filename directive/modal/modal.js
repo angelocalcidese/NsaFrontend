@@ -41,6 +41,15 @@ nsaApp.service('modalService', ['$uibModal', '$state', function ($uibModal, $sta
                 $scope.campiDiRicerca = [];
                 $scope.formvalue = {};
                 $scope.listSelected = [];
+
+                $scope.controlExpValue = function(opt, select){
+                    $log.info(opt);
+                    angular.forEach(opt, function(value) {
+                        if(value.entityId === select){
+                            return value.entityValue;
+                        }
+                    });
+                };
                 $scope.checkedElement = function(element, numelem){
                     $scope.formvalue.modalOptions.input.default = '';
                     $scope.check = [];

@@ -5,7 +5,7 @@
     </button>
     </div>
     <div class="nav nsa-nav-tabs">
-        <a href="" ng-click=" changeTab('coda');" class="nsa-nav-tabs__item" ng-class="tabActive == 'coda' ? 'active' : ''"  data-target="#tab1" data-toggle="tab">
+        <a href="" ng-click="changeTab('coda');" class="nsa-nav-tabs__item" ng-class="tabActive == 'coda' ? 'active' : ''"  data-target="#tab1" data-toggle="tab">
             In coda ({{righeTotalOrdersInLine}})
         </a>
         <a href="" ng-click="changeTab('conclusi');" class="nsa-nav-tabs__item" ng-class="tabActive == 'conclusi' ? 'active' : ''" data-target="#tab2" data-toggle="tab">
@@ -21,7 +21,7 @@
             <span class="icomoon icomoon-filter"></span>
         </a>
         <div class="nsa-tag" style="float:left" ng-if="filterView">
-            <span class="nsa-tag__text">{{filterView.length}}</span>
+            <span class="nsa-tag__text">{{countFilter}}</span>
             <a ng-click="cancellaFiltri()">
                 <span class="icomoon icomoon-cross"></span>
             </a>
@@ -54,7 +54,7 @@
             tipologia="tipologia"
             show-spinner="spinOn"
             function-edit="editOrdersInline"
-            function-detail="detailOrdersInline"
+            function-detail="controldetailOrdersInline"
             search=false
             number-items="righeTotalOrdersInLine"
             call-element="listWorkingProgress"
@@ -90,7 +90,7 @@
             tipologia="tipologia"
             show-spinner="spinOn"
             function-edit=""
-            function-detail="detailOrdersInline"
+            function-detail="detailOrdersFinished"
             search=false
             number-items="righeTotalOrdersCompleted"
             call-element="listWorkBlocked"
